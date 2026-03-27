@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TOUCHE - Menú Exclusivo | Restaurante Francés</title>
+    <meta name="description" content="Descubre nuestro exclusivo menú francés en TOUCHE. Deléitate con platos como Boeuf Bourguignon, Soupe à l'Oignon y una exquisita selección de vinos. ¡Reserva ya!">
+    
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="canonical" href="https://www.tu-dominio.com/touche-menu-exclusivo">
+    <link rel="icon" type="image/png" href="../img/favicon.png">
+
+    <meta property="og:title" content="TOUCHE - Restaurante Francés">
+    <meta property="og:description" content="Descubre nuestro exclusivo menú francés en TOUCHE. ¡Reserva ya!">
+    <meta property="og:image" content="https://www.tu-dominio.com/resto/imagen%20fondo/Gemini_Generated_Image_t1mqy6t1mqy6t1mq.png">
+    <meta property="og:type" content="restaurant.restaurant">
+    <meta property="og:url" content="https://www.tu-dominio.com/touche-menu-exclusivo">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Restaurant",
+      "name": "TOUCHE",
+      "image": "https://www.tu-dominio.com/resto/imagen%20fondo/Gemini_Generated_Image_t1mqy6t1mqy6t1mq.png",
+      "url": "https://www.tu-dominio.com/touche-menu-exclusivo",
+      "telephone": "+529990000000",
+      "servesCuisine": "Francesa",
+      "priceRange": "$$$",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Centro Histórico",
+        "addressLocality": "Mérida",
+        "addressRegion": "Yucatán",
+        "postalCode": "97000",
+        "addressCountry": "MX"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+          "opens": "12:00",
+          "closes": "23:00"
+        }
+      ]
+    }
+    </script>
+</head>
+<body class="resto-body">
+
+    <input type="checkbox" id="toggle-menu" class="screen-switch" aria-label="Alternar Menú" aria-hidden="true">
+    
+    <input type="radio" name="categoria" id="cat-menu" class="category-switch" checked aria-hidden="true">
+    <input type="radio" name="categoria" id="cat-postres" class="category-switch" aria-hidden="true">
+    <input type="radio" name="categoria" id="cat-vinos" class="category-switch" aria-hidden="true">
+    <input type="radio" name="categoria" id="cat-cocteles" class="category-switch" aria-hidden="true">
+    <input type="radio" name="categoria" id="cat-servicio" class="category-switch" aria-hidden="true">
+    <input type="radio" name="categoria" id="cat-delivery" class="category-switch" aria-hidden="true">
+
+    <img src="../resto/imagen fondo/Gemini_Generated_Image_t1mqy6t1mqy6t1mq.png" alt="Fondo decorativo del restaurante" class="main-bg">
+
+    <header id="pantalla-bienvenida" role="banner">
+        <label for="toggle-menu" class="welcome-trigger" aria-label="Mostrar menú" role="button" tabindex="0">
+            <img src="../resto/bienvenida/bienve.png" alt="Logo oficial del restaurante TOUCHE" class="welcome-img">
+        </label>
+        <h1 class="visually-hidden">TOUCHE - Restaurante Francés en Mérida</h1>
+    </header>
+
+    <section id="pantalla-menu" role="main">
+        <h2 class="visually-hidden">Menú Exclusivo</h2>
+        
+        <nav class="resto-nav" role="navigation" aria-label="Navegación del menú">
+            <div class="nav-group-left">
+                <label for="cat-menu" class="nav-item">Menú del Día</label>
+                <label for="cat-postres" class="nav-item">Postres</label>
+                <label for="cat-vinos" class="nav-item">Cava de Vinos</label>
+                <label for="cat-cocteles" class="nav-item">Cócteles</label>
+                <label for="cat-servicio" class="nav-item">Servicio</label>
+                <label for="cat-delivery" class="nav-item">Delivery</label>
+            </div>
+        </nav>
+
+        <div class="menu-container">
+            <img src="../resto/menu/Gemini_Generated_Image_vp4u47vp4u47vp4u__1_-removebg-preview.png" alt="Pizarra elegante del menú" class="menu-board-img">
+
+            <h3 id="title-platillos" class="visually-hidden">Platos Principales y Entradas</h3>
+            <div id="platillos-grid" class="dishes-grid" role="list" aria-labelledby="title-platillos">
+                <div class="dish-item" role="listitem"><span>Boeuf Bourguignon</span><span>$28</span></div>
+                <div class="dish-item" role="listitem"><span>Soupe à l'Oignon</span><span>$14</span></div>
+                <div class="dish-item" role="listitem"><span>Escargots de Bourgogne</span><span>$18</span></div>
+                <div class="dish-item" role="listitem"><span>Ratatouille Niçoise</span><span>$22</span></div>
+                <div class="dish-item" role="listitem"><span>Quiche Lorraine</span><span>$16</span></div>
+                <div class="dish-item" role="listitem"><span>Magret de Canard</span><span>$31</span></div>
+                <div class="dish-item" role="listitem"><span>Moules Marinières</span><span>$24</span></div>
+                <div class="dish-item" role="listitem"><span>Poularde de Bresse</span><span>$34</span></div>
+                <div class="dish-item" role="listitem"><span>Steak Tartare</span><span>$27</span></div>
+                <div class="dish-item" role="listitem"><span>Gratin Dauphinois</span><span>$19</span></div>
+            </div>
+
+            <h3 id="title-postres" class="visually-hidden">Nuestros Postres Franceses</h3>
+            <div id="grid-postres" class="dishes-grid" role="list" aria-labelledby="title-postres">
+                <div class="dish-item" role="listitem"><span>Crème Brûlée</span><span>$120</span></div>
+                <div class="dish-item" role="listitem"><span>Tarte Tatin</span><span>$145</span></div>
+                <div class="dish-item" role="listitem"><span>Mousse au Chocolat</span><span>$110</span></div>
+                <div class="dish-item" role="listitem"><span>Profiteroles</span><span>$130</span></div>
+            </div>
+
+            <h3 id="title-vinos" class="visually-hidden">Cava de Vinos Exclusivos</h3>
+            <div id="grid-vinos" class="dishes-grid" role="list" aria-labelledby="title-vinos">
+                <div class="dish-item" role="listitem"><span>Chardonnay</span><span>$45</span></div>
+                <div class="dish-item" role="listitem"><span>Cabernet Sauvignon</span><span>$60</span></div>
+            </div>
+        </div>
+
+        <footer class="resto-footer">
+            <form class="footer-register" action="#" method="POST">
+                <label for="reserva-email" class="gold-label">RESERVA:</label>
+                <input type="email" id="reserva-email" name="email" aria-label="Tu Email para reservas" placeholder="Tu Email..." class="resto-input" required>
+                <button type="submit" class="resto-btn">REGISTRAR</button>
+            </form>
+
+            <div class="footer-info-group">
+                <div class="footer-group">
+                    <span class="gold-label">DÍAS:</span>
+                    <span class="white-text">Martes a Domingo</span>
+                </div>
+                <div class="footer-group">
+                    <span class="gold-label">HORARIOS:</span>
+                    <span class="white-text">12:00 PM - 23:00 PM</span>
+                </div>
+            </div>
+        </footer>
+    </section>
+
+</body>
+</html>

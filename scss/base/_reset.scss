@@ -1,0 +1,16 @@
+@use '../utilities/variables' as *;
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --touche-vino: #{$touche-vino};
+  --touche-dorado: #{$touche-dorado};
+  --fuente: #{$font-touche};
+  --bikerace-red: #{$bikerace-red};
+  --bikerace-dark: #{$bikerace-dark};
+}

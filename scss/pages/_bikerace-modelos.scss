@@ -1,0 +1,555 @@
+@use '../utilities/variables' as *;
+@use '../utilities/mixins' as *;
+
+
+// ==========================================
+// MODELOS PAGE — BASE
+// ==========================================
+
+body.modelos-page {
+  background-color: $bikerace-dark;
+  color: $bikerace-white;
+  font-family: $font-bikerace;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+// ----- Carousel -----
+
+body.modelos-page #modelosCarousel {
+  position: relative;
+
+  @include mobile-portrait {
+    height: 50vh;
+    min-height: 350px;
+  }
+
+  @include mobile-landscape {
+    height: 60vh;
+    min-height: 200px;
+  }
+
+  @include tablet-portrait {
+    height: 55vh;
+    min-height: 400px;
+  }
+
+  @include tablet-landscape {
+    height: 50vh;
+    min-height: 350px;
+    margin-bottom: 0;
+  }
+
+  @include desktop-modelos {
+    height: 75vh;
+    min-height: 500px;
+  }
+}
+
+body.modelos-page .carousel-inner,
+body.modelos-page .carousel-item {
+  height: 100%;
+}
+
+body.modelos-page .carousel-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+body.modelos-page .carousel-caption {
+  @include mobile-portrait {
+    bottom: 10%;
+    padding: 0 15px;
+    text-align: center !important;
+  }
+
+  @include mobile-landscape {
+    bottom: 5%;
+    padding: 0 50px;
+  }
+
+  @include tablet-portrait {
+    bottom: 15%;
+    padding: 0 40px;
+    text-align: left;
+  }
+
+  @include tablet-landscape {
+    bottom: 12%;
+    padding: 0 100px;
+    z-index: 5;
+  }
+
+  @include desktop-modelos {
+    bottom: 25%;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+}
+
+body.modelos-page .carousel-caption h1 {
+  font-weight: 900;
+  text-shadow: 2px 2px 8px $bikerace-shadow-heavy;
+
+  @include mobile-portrait {
+    font-size: 1.8rem;
+  }
+
+  @include mobile-landscape {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+    text-shadow: 2px 2px 5px $bikerace-shadow-medium;
+  }
+
+  @include tablet-portrait {
+    font-size: 2.8rem;
+    margin-bottom: 10px;
+    text-shadow: 3px 3px 10px $bikerace-shadow-heavy;
+  }
+
+  @include desktop-modelos {
+    font-size: 4rem;
+    letter-spacing: 2px;
+  }
+}
+
+body.modelos-page .carousel-caption p {
+  text-shadow: 1px 1px 5px $bikerace-shadow-heavy;
+
+  @include mobile-portrait {
+    font-size: 0.9rem;
+  }
+
+  @include mobile-landscape {
+    font-size: 0.8rem;
+    margin-bottom: 5px;
+    text-shadow: 1px 1px 4px $bikerace-shadow-medium;
+  }
+
+  @include tablet-portrait {
+    font-size: 1.1rem;
+    text-shadow: 2px 2px 8px $bikerace-shadow-heavy;
+  }
+}
+
+// ----- Main (tablet-landscape override) -----
+
+@include tablet-landscape {
+  body.modelos-page main {
+    height: auto;
+    overflow: visible;
+    display: block;
+  }
+}
+
+// ----- Catalog Section -----
+
+body.modelos-page .catalog-section {
+  @include mobile-portrait {
+    padding: 40px 15px;
+  }
+
+  @include mobile-landscape {
+    padding: 20px 15px;
+  }
+
+  @include tablet-portrait {
+    padding: 50px 30px;
+  }
+
+  @include tablet-landscape {
+    margin-top: 80px;
+    padding-bottom: 80px;
+    padding-left: 50px;
+    padding-right: 50px;
+    background-color: $bikerace-dark;
+    position: relative;
+    z-index: 10;
+  }
+
+  @include desktop-modelos {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 100px 20px;
+  }
+}
+
+body.modelos-page .catalog-title {
+  text-align: center;
+  font-weight: 900;
+  color: $bikerace-white;
+
+  @include mobile-portrait {
+    font-size: 1.4rem;
+    margin-bottom: 30px;
+    letter-spacing: 1px;
+  }
+
+  @include mobile-landscape {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+  }
+
+  @include tablet-portrait {
+    font-size: 2rem;
+    margin-bottom: 40px;
+  }
+
+  @include tablet-landscape {
+    font-size: 2.2rem;
+    margin-bottom: 70px;
+  }
+
+  @include desktop-modelos {
+    font-size: 3rem;
+    margin-bottom: 80px;
+  }
+}
+
+// ----- Category Row -----
+
+body.modelos-page .modelos-category-row {
+  display: flex;
+
+  @include mobile-portrait {
+    flex-direction: column;
+    margin-bottom: 40px;
+  }
+
+  @include mobile-landscape {
+    flex-direction: column;
+    margin-bottom: 30px;
+  }
+
+  @include tablet-portrait {
+    flex-direction: row;
+    align-items: stretch;
+    gap: 25px;
+    margin-bottom: 50px;
+  }
+
+  @include tablet-landscape {
+    flex-direction: row;
+    gap: 40px;
+    margin-bottom: 80px;
+  }
+
+  @include desktop-modelos {
+    gap: 60px;
+    margin-bottom: 120px;
+  }
+}
+
+// ----- Category Label -----
+
+body.modelos-page .category-label-container {
+  background-color: $bikerace-red;
+  border-radius: 4px;
+
+  @include mobile-portrait {
+    padding: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  @include mobile-landscape {
+    padding: 8px;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+
+  @include tablet-portrait {
+    width: 50px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 0;
+    margin-bottom: 0;
+  }
+
+  @include tablet-landscape {
+    width: 60px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 0;
+  }
+
+  @include desktop-modelos {
+    width: 80px;
+  }
+}
+
+body.modelos-page .vertical-label {
+  @include mobile-portrait {
+    writing-mode: horizontal-tb;
+    transform: none;
+  }
+
+  @include mobile-landscape {
+    writing-mode: horizontal-tb;
+    transform: none;
+  }
+
+  @include tablet-portrait {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    white-space: nowrap;
+  }
+
+  @include tablet-landscape {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+body.modelos-page .vertical-label span {
+  font-weight: 800;
+  color: $bikerace-white;
+
+  @include mobile-portrait {
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+  }
+
+  @include mobile-landscape {
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+  }
+
+  @include tablet-portrait {
+    font-weight: 900;
+    font-size: 1rem;
+    letter-spacing: 3px;
+  }
+
+  @include tablet-landscape {
+    font-weight: 900;
+    font-size: 1rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  @include desktop-modelos {
+    font-size: 1.4rem;
+    letter-spacing: 6px;
+  }
+}
+
+// ----- Category Grid -----
+
+body.modelos-page .category-grid {
+  display: grid;
+
+  @include mobile-portrait {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  @include mobile-landscape {
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+  }
+
+  @include tablet-portrait {
+    flex-grow: 1;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+  }
+
+  @include tablet-landscape {
+    flex-grow: 1;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
+
+  @include desktop-modelos {
+    gap: 40px;
+  }
+}
+
+// ----- Moto Card -----
+
+body.modelos-page .moto-card-item {
+  background-color: $bikerace-card-bg;
+  border: 1px solid $bikerace-card-border;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @include mobile-portrait {
+    padding: 25px 15px;
+    text-align: center;
+  }
+
+  @include mobile-landscape {
+    padding: 15px;
+    justify-content: space-between;
+  }
+
+  @include tablet-portrait {
+    padding: 30px 20px;
+    justify-content: space-between;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+      border-color: $bikerace-red;
+    }
+  }
+
+  @include tablet-landscape {
+    padding: 35px 25px;
+    border-radius: 20px;
+    min-height: 420px;
+  }
+
+  @include desktop-modelos {
+    padding: 50px 40px;
+    background: $bikerace-card-bg-alt;
+    border-color: $bikerace-card-border-alt;
+    border-radius: 25px;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-15px);
+      border-color: $bikerace-red;
+      box-shadow: 0 20px 40px $bikerace-shadow-light, 0 0 20px $bikerace-red-glow-faint;
+    }
+  }
+}
+
+body.modelos-page .moto-title {
+  font-weight: bold;
+  color: $bikerace-white;
+
+  @include mobile-portrait {
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+  }
+
+  @include mobile-landscape {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  @include tablet-portrait {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+  }
+
+  @include desktop-modelos {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+  }
+}
+
+body.modelos-page .moto-image {
+  width: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 15px $bikerace-shadow-btn);
+
+  @include mobile-portrait {
+    max-width: 250px;
+    height: auto;
+    margin-bottom: 15px;
+  }
+
+  @include mobile-landscape {
+    max-width: 180px;
+    height: 100px;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 5px 10px $bikerace-shadow-btn);
+  }
+
+  @include tablet-portrait {
+    max-width: 220px;
+    height: 130px;
+    margin-bottom: 15px;
+    filter: drop-shadow(0 10px 15px $bikerace-shadow-light);
+  }
+
+  @include tablet-landscape {
+    max-width: 260px;
+    height: 150px;
+    margin-bottom: 25px;
+  }
+
+  @include desktop-modelos {
+    max-width: 350px;
+    height: 200px;
+    margin-bottom: 30px;
+    transition: transform 0.6s ease;
+  }
+}
+
+@include desktop-modelos {
+  body.modelos-page .moto-card-item:hover .moto-image {
+    transform: scale(1.1);
+  }
+}
+
+body.modelos-page .moto-brand-logo {
+  height: auto;
+  border-radius: 4px;
+
+  @include mobile-portrait {
+    width: 40px;
+    margin-bottom: 15px;
+  }
+
+  @include mobile-landscape {
+    width: 30px;
+    margin-bottom: 10px;
+  }
+
+  @include tablet-portrait {
+    width: 40px;
+    margin-bottom: 15px;
+  }
+
+  @include tablet-landscape {
+    width: 45px;
+    height: 45px;
+    margin-bottom: 20px;
+  }
+}
+
+body.modelos-page .moto-description {
+  color: $bikerace-text-dim;
+  line-height: 1.5;
+
+  @include mobile-portrait {
+    font-size: 0.85rem;
+    margin: 0;
+  }
+
+  @include mobile-landscape {
+    font-size: 0.75rem;
+    line-height: 1.4;
+    text-align: center;
+  }
+
+  @include tablet-portrait {
+    font-size: 0.9rem;
+    text-align: center;
+  }
+
+  @include desktop-modelos {
+    font-size: 1rem;
+    max-width: 80%;
+    line-height: 1.8;
+  }
+}
