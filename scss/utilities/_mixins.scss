@@ -1,0 +1,74 @@
+// ==========================================
+// MEDIA QUERY MIXINS
+// ==========================================
+
+// Celular Vertical
+@mixin mobile-portrait {
+  @media screen and (max-width: 767px) and (orientation: portrait) {
+    @content;
+  }
+}
+
+// Celular Horizontal
+@mixin mobile-landscape {
+  @media screen and (max-height: 500px) and (orientation: landscape) {
+    @content;
+  }
+}
+
+// Alias para resto (misma query pero semántica distinta)
+@mixin resto-landscape {
+  @media screen and (orientation: landscape) and (max-height: 500px) {
+    @content;
+  }
+}
+
+// Tablet Vertical — Restaurante (501–1024)
+@mixin resto-tablet-portrait {
+  @media screen and (min-width: 501px) and (max-width: 1024px) and (orientation: portrait) {
+    @content;
+  }
+}
+
+// Tablet Vertical — BikeRace (768–1024)
+@mixin tablet-portrait {
+  @media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    @content;
+  }
+}
+
+// Tablet Horizontal
+@mixin tablet-landscape {
+  @media screen and (min-width: 1024px) and (max-height: 850px) and (orientation: landscape) {
+    @content;
+  }
+}
+
+// Tablet Horizontal + Desktop landscape — Restaurante
+@mixin resto-tablet-landscape {
+  @media screen and (min-width: 1025px) and (orientation: landscape),
+    screen and (min-width: 769px) and (max-height: 900px) and (orientation: landscape) {
+    @content;
+  }
+}
+
+// Desktop — Restaurante (1281+)
+@mixin resto-desktop {
+  @media screen and (min-width: 1281px) {
+    @content;
+  }
+}
+
+// Desktop — BikeRace (1025+)
+@mixin desktop {
+  @media screen and (min-width: 1025px) {
+    @content;
+  }
+}
+
+// Desktop — Modelos (1200+)
+@mixin desktop-modelos {
+  @media screen and (min-width: 1200px) {
+    @content;
+  }
+}
