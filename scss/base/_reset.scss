@@ -1,11 +1,17 @@
 @use '../utilities/variables' as *;
 
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
+body {
+  background-color: $color-body-bg;
+  min-height: 100vh;
+  font-family: $font-primary;
+}
+
 
 :root {
   --touche-vino: #{$touche-vino};

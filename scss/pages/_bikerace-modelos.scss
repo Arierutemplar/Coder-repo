@@ -3,7 +3,7 @@
 
 
 // ==========================================
-// MODELOS PAGE — BASE
+// MODELOS PAGE
 // ==========================================
 
 body.modelos-page {
@@ -15,10 +15,14 @@ body.modelos-page {
   overflow-x: hidden;
 }
 
-// ----- Carousel -----
+
+// ==========================================
+// CAROUSEL
+// ==========================================
 
 body.modelos-page #modelosCarousel {
   position: relative;
+  width: 100%;
 
   @include mobile-portrait {
     height: 50vh;
@@ -26,8 +30,8 @@ body.modelos-page #modelosCarousel {
   }
 
   @include mobile-landscape {
-    height: 60vh;
-    min-height: 200px;
+    height: 58vh;
+    min-height: 240px;
   }
 
   @include tablet-portrait {
@@ -36,20 +40,38 @@ body.modelos-page #modelosCarousel {
   }
 
   @include tablet-landscape {
-    height: 50vh;
-    min-height: 350px;
-    margin-bottom: 0;
+    height: 52vh;
+    min-height: 360px;
+    max-height: 500px;
   }
 
   @include desktop-modelos {
-    height: 75vh;
-    min-height: 500px;
+    height: 58vh;
+    min-height: 420px;
+    max-height: 560px;
   }
 }
 
 body.modelos-page .carousel-inner,
 body.modelos-page .carousel-item {
   height: 100%;
+}
+
+body.modelos-page .carousel-item {
+  position: relative;
+}
+
+body.modelos-page .carousel-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.72) 0%,
+    rgba(0, 0, 0, 0.45) 45%,
+    rgba(0, 0, 0, 0.2) 100%
+  );
+  z-index: 1;
 }
 
 body.modelos-page .carousel-img {
@@ -60,120 +82,142 @@ body.modelos-page .carousel-img {
 }
 
 body.modelos-page .carousel-caption {
+  z-index: 2;
+
   @include mobile-portrait {
-    bottom: 10%;
-    padding: 0 15px;
-    text-align: center !important;
+    bottom: 12%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 30px);
+    padding: 0 10px;
+    text-align: center;
   }
 
   @include mobile-landscape {
-    bottom: 5%;
-    padding: 0 50px;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 40px);
+    padding: 0 20px;
+    text-align: center;
   }
 
   @include tablet-portrait {
-    bottom: 15%;
+    bottom: 14%;
     padding: 0 40px;
     text-align: left;
   }
 
   @include tablet-landscape {
-    bottom: 12%;
-    padding: 0 100px;
-    z-index: 5;
+    bottom: 15%;
+    padding: 0 80px;
   }
 
   @include desktop-modelos {
-    bottom: 25%;
+    bottom: 18%;
     max-width: 800px;
-    margin: 0 auto;
+    padding: 0 20px;
   }
 }
 
-body.modelos-page .carousel-caption h1 {
+body.modelos-page .carousel-caption .h1 {
   font-weight: 900;
+  color: $bikerace-white;
   text-shadow: 2px 2px 8px $bikerace-shadow-heavy;
 
   @include mobile-portrait {
-    font-size: 1.8rem;
+    font-size: 1.7rem;
+    margin-bottom: 8px;
   }
 
   @include mobile-landscape {
-    font-size: 1.5rem;
-    margin-bottom: 5px;
-    text-shadow: 2px 2px 5px $bikerace-shadow-medium;
+    font-size: 1.4rem;
+    margin-bottom: 6px;
   }
 
   @include tablet-portrait {
-    font-size: 2.8rem;
+    font-size: 2.4rem;
     margin-bottom: 10px;
-    text-shadow: 3px 3px 10px $bikerace-shadow-heavy;
+  }
+
+  @include tablet-landscape {
+    font-size: 2.8rem;
   }
 
   @include desktop-modelos {
-    font-size: 4rem;
-    letter-spacing: 2px;
+    font-size: 3.5rem;
+    letter-spacing: 1px;
   }
 }
 
 body.modelos-page .carousel-caption p {
+  color: $bikerace-white;
   text-shadow: 1px 1px 5px $bikerace-shadow-heavy;
 
   @include mobile-portrait {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    margin-bottom: 0;
   }
 
   @include mobile-landscape {
-    font-size: 0.8rem;
-    margin-bottom: 5px;
-    text-shadow: 1px 1px 4px $bikerace-shadow-medium;
+    font-size: 0.85rem;
+    margin-bottom: 0;
   }
 
   @include tablet-portrait {
-    font-size: 1.1rem;
-    text-shadow: 2px 2px 8px $bikerace-shadow-heavy;
-  }
-}
-
-// ----- Main (tablet-landscape override) -----
-
-@include tablet-landscape {
-  body.modelos-page main {
-    height: auto;
-    overflow: visible;
-    display: block;
-  }
-}
-
-// ----- Catalog Section -----
-
-body.modelos-page .catalog-section {
-  @include mobile-portrait {
-    padding: 40px 15px;
-  }
-
-  @include mobile-landscape {
-    padding: 20px 15px;
-  }
-
-  @include tablet-portrait {
-    padding: 50px 30px;
+    font-size: 1rem;
   }
 
   @include tablet-landscape {
-    margin-top: 80px;
-    padding-bottom: 80px;
-    padding-left: 50px;
-    padding-right: 50px;
-    background-color: $bikerace-dark;
-    position: relative;
-    z-index: 10;
+    font-size: 1.05rem;
+  }
+
+  @include desktop-modelos {
+    font-size: 1.1rem;
+  }
+}
+
+
+// ==========================================
+// MAIN
+// ==========================================
+
+body.modelos-page main {
+  display: block;
+  width: 100%;
+  background-color: $bikerace-dark;
+}
+
+
+// ==========================================
+// CATALOG SECTION
+// ==========================================
+
+body.modelos-page .catalog-section {
+  position: relative;
+  z-index: 3;
+  background-color: $bikerace-dark;
+
+  @include mobile-portrait {
+    padding: 40px 15px 50px;
+  }
+
+  @include mobile-landscape {
+    padding: 35px 15px 50px;
+  }
+
+  @include tablet-portrait {
+    padding: 50px 30px 60px;
+  }
+
+  @include tablet-landscape {
+    padding: 60px 40px 70px;
   }
 
   @include desktop-modelos {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 100px 20px;
+    padding: 70px 20px 90px;
   }
 }
 
@@ -181,6 +225,7 @@ body.modelos-page .catalog-title {
   text-align: center;
   font-weight: 900;
   color: $bikerace-white;
+  line-height: 1.2;
 
   @include mobile-portrait {
     font-size: 1.4rem;
@@ -190,7 +235,8 @@ body.modelos-page .catalog-title {
 
   @include mobile-landscape {
     font-size: 1.2rem;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
+    letter-spacing: 1px;
   }
 
   @include tablet-portrait {
@@ -200,28 +246,34 @@ body.modelos-page .catalog-title {
 
   @include tablet-landscape {
     font-size: 2.2rem;
-    margin-bottom: 70px;
+    margin-bottom: 55px;
   }
 
   @include desktop-modelos {
-    font-size: 3rem;
-    margin-bottom: 80px;
+    font-size: 2.8rem;
+    margin-bottom: 70px;
+    letter-spacing: 2px;
   }
 }
 
-// ----- Category Row -----
+
+// ==========================================
+// CATEGORY ROW
+// ==========================================
 
 body.modelos-page .modelos-category-row {
   display: flex;
 
   @include mobile-portrait {
     flex-direction: column;
+    gap: 18px;
     margin-bottom: 40px;
   }
 
   @include mobile-landscape {
     flex-direction: column;
-    margin-bottom: 30px;
+    gap: 16px;
+    margin-bottom: 35px;
   }
 
   @include tablet-portrait {
@@ -233,55 +285,56 @@ body.modelos-page .modelos-category-row {
 
   @include tablet-landscape {
     flex-direction: row;
-    gap: 40px;
-    margin-bottom: 80px;
+    align-items: stretch;
+    gap: 32px;
+    margin-bottom: 70px;
   }
 
   @include desktop-modelos {
-    gap: 60px;
-    margin-bottom: 120px;
+    gap: 40px;
+    margin-bottom: 90px;
   }
 }
 
-// ----- Category Label -----
+
+// ==========================================
+// CATEGORY LABEL
+// ==========================================
 
 body.modelos-page .category-label-container {
   background-color: $bikerace-red;
-  border-radius: 4px;
+  border-radius: 8px;
 
   @include mobile-portrait {
-    padding: 10px;
-    margin-bottom: 20px;
+    padding: 12px 14px;
     text-align: center;
   }
 
   @include mobile-landscape {
-    padding: 8px;
-    margin-bottom: 15px;
+    padding: 10px 12px;
     text-align: center;
   }
 
   @include tablet-portrait {
-    width: 50px;
-    border-radius: 8px;
+    width: 56px;
+    padding: 20px 0;
+    margin-bottom: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px 0;
-    margin-bottom: 0;
   }
 
   @include tablet-landscape {
-    width: 60px;
-    border-radius: 10px;
+    width: 64px;
+    padding: 24px 0;
     display: flex;
-    justify-content: center;
     align-items: center;
-    padding: 30px 0;
+    justify-content: center;
+    border-radius: 10px;
   }
 
   @include desktop-modelos {
-    width: 80px;
+    width: 76px;
   }
 }
 
@@ -313,8 +366,9 @@ body.modelos-page .vertical-label {
 }
 
 body.modelos-page .vertical-label span {
-  font-weight: 800;
+  font-weight: 900;
   color: $bikerace-white;
+  text-transform: uppercase;
 
   @include mobile-portrait {
     font-size: 0.9rem;
@@ -322,33 +376,34 @@ body.modelos-page .vertical-label span {
   }
 
   @include mobile-landscape {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     letter-spacing: 1px;
   }
 
   @include tablet-portrait {
-    font-weight: 900;
-    font-size: 1rem;
+    font-size: 0.95rem;
     letter-spacing: 3px;
   }
 
   @include tablet-landscape {
-    font-weight: 900;
     font-size: 1rem;
     letter-spacing: 3px;
-    text-transform: uppercase;
   }
 
   @include desktop-modelos {
-    font-size: 1.4rem;
-    letter-spacing: 6px;
+    font-size: 1.2rem;
+    letter-spacing: 5px;
   }
 }
 
-// ----- Category Grid -----
+
+// ==========================================
+// CATEGORY GRID
+// ==========================================
 
 body.modelos-page .category-grid {
   display: grid;
+  width: 100%;
 
   @include mobile-portrait {
     grid-template-columns: 1fr;
@@ -357,101 +412,113 @@ body.modelos-page .category-grid {
 
   @include mobile-landscape {
     grid-template-columns: 1fr 1fr;
-    gap: 15px;
+    gap: 18px;
   }
 
   @include tablet-portrait {
     flex-grow: 1;
-    grid-template-columns: 1fr 1fr;
-    gap: 25px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
   }
 
   @include tablet-landscape {
     flex-grow: 1;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
+    grid-template-columns: repeat(2, minmax(240px, 1fr));
+    gap: 28px;
   }
 
   @include desktop-modelos {
-    gap: 40px;
+    grid-template-columns: repeat(2, minmax(300px, 1fr));
+    gap: 32px;
   }
 }
 
-// ----- Moto Card -----
+
+// ==========================================
+// MOTO CARD
+// ==========================================
 
 body.modelos-page .moto-card-item {
   background-color: $bikerace-card-bg;
   border: 1px solid $bikerace-card-border;
-  border-radius: 8px;
+  border-radius: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
 
   @include mobile-portrait {
-    padding: 25px 15px;
-    text-align: center;
+    padding: 24px 16px;
   }
 
   @include mobile-landscape {
-    padding: 15px;
-    justify-content: space-between;
+    padding: 18px 14px;
   }
 
   @include tablet-portrait {
-    padding: 30px 20px;
-    justify-content: space-between;
-    transition: transform 0.3s ease, border-color 0.3s ease;
-
-    &:hover {
-      transform: translateY(-5px);
-      border-color: $bikerace-red;
-    }
+    padding: 28px 18px;
+    min-height: 100%;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   }
 
   @include tablet-landscape {
-    padding: 35px 25px;
-    border-radius: 20px;
-    min-height: 420px;
+    padding: 30px 22px;
+    min-height: 390px;
   }
 
   @include desktop-modelos {
-    padding: 50px 40px;
+    padding: 36px 28px;
+    min-height: 430px;
     background: $bikerace-card-bg-alt;
     border-color: $bikerace-card-border-alt;
-    border-radius: 25px;
-    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
     cursor: pointer;
+  }
+}
 
-    &:hover {
-      transform: translateY(-15px);
-      border-color: $bikerace-red;
-      box-shadow: 0 20px 40px $bikerace-shadow-light, 0 0 20px $bikerace-red-glow-faint;
-    }
+@include tablet-portrait {
+  body.modelos-page .moto-card-item:hover {
+    transform: translateY(-6px);
+    border-color: $bikerace-red;
+    box-shadow: 0 14px 28px $bikerace-shadow-light;
+  }
+}
+
+@include desktop-modelos {
+  body.modelos-page .moto-card-item:hover {
+    transform: translateY(-10px);
+    border-color: $bikerace-red;
+    box-shadow: 0 18px 36px $bikerace-shadow-light, 0 0 18px $bikerace-red-glow-faint;
   }
 }
 
 body.modelos-page .moto-title {
-  font-weight: bold;
+  font-weight: 800;
   color: $bikerace-white;
+  line-height: 1.2;
 
   @include mobile-portrait {
-    font-size: 1.3rem;
-    margin-bottom: 15px;
+    font-size: 1.25rem;
+    margin-bottom: 14px;
   }
 
   @include mobile-landscape {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     margin-bottom: 10px;
-    text-align: center;
   }
 
   @include tablet-portrait {
-    font-size: 1.4rem;
-    margin-bottom: 15px;
+    font-size: 1.35rem;
+    margin-bottom: 14px;
+  }
+
+  @include tablet-landscape {
+    font-size: 1.5rem;
+    margin-bottom: 16px;
   }
 
   @include desktop-modelos {
-    font-size: 1.8rem;
+    font-size: 1.75rem;
     margin-bottom: 20px;
   }
 }
@@ -462,94 +529,103 @@ body.modelos-page .moto-image {
   filter: drop-shadow(0 10px 15px $bikerace-shadow-btn);
 
   @include mobile-portrait {
-    max-width: 250px;
-    height: auto;
-    margin-bottom: 15px;
+    max-width: 240px;
+    height: 150px;
+    margin-bottom: 14px;
   }
 
   @include mobile-landscape {
     max-width: 180px;
-    height: 100px;
-    margin-bottom: 10px;
+    height: 110px;
+    margin-bottom: 12px;
     filter: drop-shadow(0 5px 10px $bikerace-shadow-btn);
   }
 
   @include tablet-portrait {
     max-width: 220px;
     height: 130px;
-    margin-bottom: 15px;
+    margin-bottom: 14px;
     filter: drop-shadow(0 10px 15px $bikerace-shadow-light);
   }
 
   @include tablet-landscape {
-    max-width: 260px;
+    max-width: 250px;
     height: 150px;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
   }
 
   @include desktop-modelos {
-    max-width: 350px;
-    height: 200px;
-    margin-bottom: 30px;
-    transition: transform 0.6s ease;
+    max-width: 320px;
+    height: 190px;
+    margin-bottom: 24px;
+    transition: transform 0.45s ease;
   }
 }
 
 @include desktop-modelos {
   body.modelos-page .moto-card-item:hover .moto-image {
-    transform: scale(1.1);
+    transform: scale(1.06);
   }
 }
 
 body.modelos-page .moto-brand-logo {
   height: auto;
+  object-fit: contain;
   border-radius: 4px;
 
   @include mobile-portrait {
-    width: 40px;
-    margin-bottom: 15px;
+    width: 42px;
+    margin-bottom: 14px;
   }
 
   @include mobile-landscape {
-    width: 30px;
-    margin-bottom: 10px;
+    width: 34px;
+    margin-bottom: 12px;
   }
 
   @include tablet-portrait {
     width: 40px;
-    margin-bottom: 15px;
+    margin-bottom: 14px;
   }
 
   @include tablet-landscape {
-    width: 45px;
-    height: 45px;
+    width: 44px;
+    height: 44px;
+    margin-bottom: 18px;
+  }
+
+  @include desktop-modelos {
+    width: 48px;
+    height: 48px;
     margin-bottom: 20px;
   }
 }
 
 body.modelos-page .moto-description {
   color: $bikerace-text-dim;
-  line-height: 1.5;
+  line-height: 1.6;
+  margin: 0;
 
   @include mobile-portrait {
-    font-size: 0.85rem;
-    margin: 0;
+    font-size: 0.88rem;
   }
 
   @include mobile-landscape {
-    font-size: 0.75rem;
-    line-height: 1.4;
-    text-align: center;
+    font-size: 0.78rem;
+    line-height: 1.45;
   }
 
   @include tablet-portrait {
     font-size: 0.9rem;
-    text-align: center;
+  }
+
+  @include tablet-landscape {
+    font-size: 0.95rem;
   }
 
   @include desktop-modelos {
     font-size: 1rem;
-    max-width: 80%;
-    line-height: 1.8;
+    max-width: 85%;
+    line-height: 1.75;
   }
 }

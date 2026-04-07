@@ -1,9 +1,6 @@
+
 @use '../utilities/variables' as *;
 @use '../utilities/mixins' as *;
-
-// ==========================================
-// RESTAURANTE (TOUCHE) — BASE cel
-// ==========================================
 
 .resto-body {
   font-family: $font-touche;
@@ -28,8 +25,6 @@
   display: none;
 }
 
-// ----- Pantalla Bienvenida -----
-
 .resto-body #pantalla-bienvenida {
   position: fixed;
   inset: 0;
@@ -40,10 +35,21 @@
   background: transparent;
 }
 
+.resto-body .welcome-trigger {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
 .resto-body .welcome-img {
+  display: block;
   max-width: 280px;
   height: auto;
+  margin: 0 auto;
   cursor: pointer;
+  position: relative;
+  z-index: 2;
   filter: drop-shadow(0 10px 20px $touche-shadow-dark);
   animation: resto-pulse 2s infinite ease-in-out;
   transition: filter 0.5s ease;
@@ -68,7 +74,17 @@
   }
 }
 
-// ----- Toggle -----
+.resto-body .visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
 
 .resto-body #pantalla-menu {
   display: none;
@@ -81,8 +97,6 @@
 .resto-body #toggle-menu:checked ~ #pantalla-menu {
   display: block;
 }
-
-// ----- Navegación -----
 
 .resto-body .nav-group-left {
   position: fixed;
@@ -197,15 +211,11 @@
   }
 }
 
-// ----- Categorías -----
-
 .resto-body #cat-menu:checked ~ #pantalla-menu label[for='cat-menu'],
 .resto-body #cat-postres:checked ~ #pantalla-menu label[for='cat-postres'],
 .resto-body #cat-vinos:checked ~ #pantalla-menu label[for='cat-vinos'] {
   color: $touche-dorado;
 }
-
-// ----- Menu Container -----
 
 .resto-body .menu-container {
   position: absolute;
@@ -244,8 +254,6 @@
   width: 100%;
   height: auto;
 }
-
-// ----- Grilla de platos -----
 
 .resto-body .dishes-grid {
   display: none;
@@ -338,8 +346,6 @@
   padding-left: 8px;
   font-weight: 800;
 }
-
-// ----- Footer -----
 
 .resto-body .resto-footer {
   position: fixed;

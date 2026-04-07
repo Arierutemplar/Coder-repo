@@ -1,7 +1,14 @@
+@charset "UTF-8";
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+body {
+  background-color: #1a1a1a;
+  min-height: 100vh;
+  font-family: "Helvetica Neue", Arial, sans-serif;
 }
 
 :root {
@@ -63,6 +70,46 @@
     transform: translateX(0);
   }
 }
+@keyframes rotateClockwise {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotateCounterClockwise {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+@keyframes keepUpright {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+@keyframes keepUprightReverse {
+  from {
+    transform: rotate(-360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+@keyframes constant-glow {
+  0%, 100% {
+    filter: brightness(1) drop-shadow(0 10px 20px rgba(0, 0, 0, 0.8));
+  }
+  50% {
+    filter: brightness(3.2) drop-shadow(0 0 40px rgba(230, 194, 122, 0.7)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.4));
+  }
+}
 .resto-body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: #000;
@@ -96,10 +143,21 @@
   background: transparent;
 }
 
+.resto-body .welcome-trigger {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
 .resto-body .welcome-img {
+  display: block;
   max-width: 280px;
   height: auto;
+  margin: 0 auto;
   cursor: pointer;
+  position: relative;
+  z-index: 2;
   filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
   animation: resto-pulse 2s infinite ease-in-out;
   transition: filter 0.5s ease;
@@ -124,6 +182,18 @@
     filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.6));
     animation: resto-pulse 2s infinite;
   }
+}
+
+.resto-body .visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .resto-body #pantalla-menu {
@@ -1334,6 +1404,906 @@ main {
   }
 }
 
+/* --- Utilidades SEO e Identidad --- */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ==========================================================================
+   ESTILOS BASE (DESKTOP)
+   ========================================================================== */
+.main-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+.main-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.4);
+}
+
+.brand-tagline {
+  position: fixed;
+  top: 25px;
+  width: 100%;
+  text-align: center;
+  font-weight: 200;
+  font-size: 0.8rem;
+  letter-spacing: 12px;
+  text-transform: uppercase;
+  background: linear-gradient(to bottom, #cfcfcf 0%, #ffffff 50%, #9e9e9e 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  z-index: 110;
+}
+
+.display-container {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  padding: 0;
+  overflow: hidden;
+  perspective: 2000px;
+}
+
+/* --- Identidad Central (Ajustada) --- */
+.brand-center-group {
+  position: absolute;
+  top: 46%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 100;
+}
+
+.brand-identity {
+  transform: scale(0.65);
+}
+
+.brand-link {
+  display: inline-block;
+  text-decoration: none;
+}
+.brand-link:hover img {
+  filter: brightness(3.5) drop-shadow(0 0 50px rgba(230, 194, 122, 0.9));
+  transition: filter 0.5s ease;
+}
+
+.luxury-title-img {
+  height: 85vh;
+  width: auto;
+  display: block;
+  animation: constant-glow 5s infinite ease-in-out;
+}
+
+.gold-title-img {
+  position: absolute;
+  height: 9vh;
+  bottom: 49.5px;
+  left: 55%;
+  animation: constant-glow 5s infinite ease-in-out;
+  animation-delay: 0.5s;
+}
+
+/* --- Navegación --- */
+.main-nav {
+  position: fixed;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 30px;
+  z-index: 120;
+  padding: 12px 35px;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(255, 255, 255, 0.05);
+}
+.main-nav a {
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 200;
+  font-size: 0.65rem;
+  letter-spacing: 3px;
+  background: linear-gradient(to bottom, #cfcfcf 0%, #ffffff 50%, #9e9e9e 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  opacity: 0.6;
+}
+.main-nav a:hover {
+  opacity: 1;
+  letter-spacing: 5px;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.5));
+  transform: translateY(-1px);
+}
+.main-nav a::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 1px;
+  background: linear-gradient(to right, transparent, #fff, transparent);
+  margin: 5px auto 0;
+  transition: width 0.5s ease;
+}
+.main-nav a:hover::after {
+  width: 100%;
+}
+
+/* --- Carruseles 3D --- */
+.carousel-label {
+  display: none;
+}
+
+.carousel-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 50;
+  width: 350px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  transform-style: preserve-3d;
+}
+.carousel-column:first-of-type {
+  left: 0;
+  margin-left: -200px;
+}
+.carousel-column:last-of-type {
+  right: 0;
+  margin-right: -200px;
+}
+
+.carousel-wrapper {
+  width: 580px;
+  height: 580px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+.carousel-3d {
+  --radius: 240px;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  animation: rotateClockwise 45s infinite linear;
+}
+.carousel-3d.reverse {
+  animation: rotateCounterClockwise 45s infinite linear;
+}
+.carousel-3d figure {
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  left: 50%;
+  top: 50%;
+  margin-left: -80px;
+  margin-top: -80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.carousel-3d figure img {
+  width: 90%;
+  height: 90%;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.7));
+  animation: keepUpright 45s infinite linear;
+}
+
+.carousel-3d.reverse figure img {
+  animation: keepUprightReverse 45s infinite linear;
+}
+
+.carousel-3d figure:nth-child(1) {
+  transform: rotate(0deg) translateY(calc(var(--radius) * -1)) rotate(0deg);
+}
+
+.carousel-3d figure:nth-child(2) {
+  transform: rotate(36deg) translateY(calc(var(--radius) * -1)) rotate(-36deg);
+}
+
+.carousel-3d figure:nth-child(3) {
+  transform: rotate(72deg) translateY(calc(var(--radius) * -1)) rotate(-72deg);
+}
+
+.carousel-3d figure:nth-child(4) {
+  transform: rotate(108deg) translateY(calc(var(--radius) * -1)) rotate(-108deg);
+}
+
+.carousel-3d figure:nth-child(5) {
+  transform: rotate(144deg) translateY(calc(var(--radius) * -1)) rotate(-144deg);
+}
+
+.carousel-3d figure:nth-child(6) {
+  transform: rotate(180deg) translateY(calc(var(--radius) * -1)) rotate(-180deg);
+}
+
+.carousel-3d figure:nth-child(7) {
+  transform: rotate(216deg) translateY(calc(var(--radius) * -1)) rotate(-216deg);
+}
+
+.carousel-3d figure:nth-child(8) {
+  transform: rotate(252deg) translateY(calc(var(--radius) * -1)) rotate(-252deg);
+}
+
+.carousel-3d figure:nth-child(9) {
+  transform: rotate(288deg) translateY(calc(var(--radius) * -1)) rotate(-288deg);
+}
+
+.carousel-3d figure:nth-child(10) {
+  transform: rotate(324deg) translateY(calc(var(--radius) * -1)) rotate(-324deg);
+}
+
+/* --- Botones y Footer --- */
+.hidden-checkbox {
+  display: none;
+}
+
+.glass-btn {
+  position: fixed;
+  z-index: 150;
+  padding: 8px 25px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+  color: #fff;
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-weight: 200;
+  font-size: 0.65rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94), background 0.3s ease, letter-spacing 0.3s ease, opacity 0.6s ease;
+}
+.glass-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+  letter-spacing: 6px;
+}
+
+.floating-center-btn {
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 16px;
+  display: inline-block;
+}
+
+.floating-right-btn {
+  right: 30px;
+  bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+}
+.floating-right-btn img {
+  width: 14px;
+  height: 14px;
+  filter: invert(1);
+}
+
+.sliding-footer {
+  position: fixed;
+  bottom: -100%;
+  left: 0;
+  width: 100%;
+  height: 65px;
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  z-index: 115;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 30px;
+  transition: bottom 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.footer-social {
+  position: absolute;
+  left: 40px;
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  align-items: center;
+}
+.footer-social a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 35px;
+  height: 35px;
+}
+.footer-social a img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  opacity: 0.8;
+  transition: all 0.3s ease;
+}
+.footer-social a:hover img {
+  transform: scale(1.1);
+  opacity: 1;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.15));
+}
+.footer-social a.tiktok-link img {
+  transform: scale(1.2);
+}
+.footer-social a.whatsapp-link img {
+  transform: scale(0.85);
+}
+
+.footer-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+  transform: translateX(180px);
+  white-space: nowrap;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+}
+.login-form input {
+  width: 180px;
+  padding: 8px 15px;
+  background: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  color: #000;
+  border-radius: 3px;
+  font-size: 0.75rem;
+  outline: none;
+  transition: border 0.3s;
+}
+.login-form input::placeholder {
+  color: rgba(0, 0, 0, 0.5);
+  font-weight: 400;
+}
+.login-form input:focus {
+  border-color: #000;
+}
+
+.hidden-checkbox:checked ~ #login-footer {
+  bottom: 0;
+}
+
+.hidden-checkbox:checked ~ #btn-ingresar {
+  transform: translateX(calc(-50% - 240px));
+  background: rgba(240, 240, 240, 0.9);
+  color: #000;
+  z-index: 125;
+}
+
+.hidden-checkbox:checked ~ #btn-carrito {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+/* ==========================================================================
+   ANIMACIONES GLOBALES
+   ========================================================================== */
+@keyframes keepUpright {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+@keyframes keepUprightReverse {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotateClockwise {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotateCounterClockwise {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+/* ==========================================================================
+   MEDIA QUERIES - TABLET PORTRAIT (VERTICAL)
+   Rango: 768px a 1024px (Ej. iPad en vertical)
+   ========================================================================== */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+  .display-container {
+    height: 100dvh;
+  }
+  /* --- Identidad y Títulos --- */
+  .brand-tagline {
+    top: 40px;
+    font-size: 1.1rem;
+    letter-spacing: 8px;
+  }
+  .brand-center-group {
+    top: 50%;
+  }
+  .brand-identity {
+    transform: scale(0.9); /* Lo reducimos un toque más para que respire en vertical */
+  }
+  .brand-link {
+    transform: scale(1.1); /* Ajusta este valor para tablet */
+    display: inline-block;
+  }
+  .luxury-title-img {
+    width: 78vw;
+    max-width: 500px;
+    height: auto;
+  }
+  .gold-title-img {
+    height: 6vh;
+    bottom: 60px;
+    left: 56%;
+  }
+  /* --- Navegación --- */
+  .main-nav {
+    bottom: -50px;
+    gap: 20px;
+    padding: 10px 25px;
+  }
+  .main-nav a {
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+  }
+  /* --- Carruseles (Rueda 2D adaptada) --- */
+  .carousel-column {
+    width: 260px;
+    top: 46%; /* Centrado con el título */
+  }
+  .carousel-column:first-of-type {
+    left: -200px; /* Empujamos el eje hacia la izquierda, fuera de la pantalla */
+    margin-left: 0;
+  }
+  .carousel-column:last-of-type {
+    right: -200px; /* Empujamos el eje hacia la derecha, fuera de la pantalla */
+    margin-right: 0;
+  }
+  .carousel-wrapper {
+    width: 450px; /* Damos más espacio al contenedor */
+    height: 450px;
+  }
+  .carousel-3d {
+    --radius: 220px; /* ¡Rueda mucho más grande! */
+  }
+  .carousel-3d figure {
+    width: 175px; /* Relojes más grandes */
+    height: 130px;
+    /* VITAL: El margen siempre debe ser exactamente la mitad del tamaño para que gire derecho */
+    margin-left: -65px;
+    margin-top: -65px;
+  }
+  /* --- Footer y Controles UI --- */
+  .sliding-footer {
+    height: 60px;
+    padding: 0 18px;
+  }
+  .footer-social {
+    left: 18px;
+    gap: 10px;
+  }
+  .footer-social a {
+    width: 28px;
+    height: 28px;
+  }
+  .footer-social a img {
+    width: 24px;
+    height: 24px;
+  }
+  .footer-content {
+    transform: translateX(100px);
+  }
+  .login-form {
+    gap: 8px;
+    margin-right: 20px;
+  }
+  .login-form input {
+    width: 130px;
+    padding: 7px 10px;
+    font-size: 0.68rem;
+  }
+  .glass-btn {
+    font-size: 0.58rem;
+    letter-spacing: 3px;
+    padding: 8px 18px;
+  }
+  #btn-ingresar.floating-center-btn {
+    bottom: 16px;
+  }
+  .hidden-checkbox:checked ~ #btn-ingresar.floating-center-btn {
+    left: 62%;
+  }
+  .floating-right-btn {
+    right: 18px;
+    bottom: 14px;
+  }
+}
+/* ==========================================================================
+   MEDIA QUERIES - TABLET / LAPTOP LANDSCAPE (HORIZONTAL)
+   Rango: 769px a 1366px (Ej. iPad apaisado o laptops pequeñas)
+   ========================================================================== */
+@media (min-width: 769px) and (max-width: 1366px) and (orientation: landscape) {
+  .display-container {
+    height: 100dvh;
+  }
+  /* --- Identidad y Títulos --- */
+  .brand-tagline {
+    top: 20px;
+    font-size: 1.1rem;
+    letter-spacing: 10px;
+  }
+  .brand-center-group {
+    top: 45%;
+  }
+  .brand-link {
+    transform: scale(0.9); /* Un tamaño intermedio entre desktop y portrait */
+  }
+  .luxury-title-img {
+    height: 100 vh;
+  }
+  .gold-title-img {
+    bottom: 50px;
+  }
+  /* --- Navegación --- */
+  .main-nav {
+    bottom: 8px;
+    gap: 25px;
+    padding: 10px 25px;
+  }
+  .main-nav a {
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+  }
+  /* --- Carruseles (Rueda 2D adaptada) --- */
+  .carousel-column {
+    width: 300px;
+    top: 50%;
+  }
+  .carousel-column:first-of-type {
+    left: -100px; /* Empujamos suavemente hacia afuera */
+    margin-left: 0;
+  }
+  .carousel-column:last-of-type {
+    right: -100px;
+    margin-right: 0;
+  }
+  .carousel-wrapper {
+    width: 480px;
+    height: 480px;
+  }
+  .carousel-3d {
+    --radius: 200px; /* Radio perfecto para aprovechar el ancho extra */
+  }
+  .carousel-3d figure {
+    width: 150px;
+    height: 130px;
+    /* Mitad exacta del width/height para un giro perfecto */
+    margin-left: -65px;
+    margin-top: -65px;
+  }
+  /* --- Footer y Controles UI --- */
+  .sliding-footer {
+    height: 55px;
+    padding: 0 20px;
+  }
+  .footer-social {
+    left: 20px;
+    gap: 12px;
+  }
+  .footer-social a {
+    width: 30px;
+    height: 30px;
+  }
+  .footer-social a img {
+    width: 26px;
+    height: 26px;
+  }
+  .footer-content {
+    transform: translateX(120px);
+  }
+  .login-form input {
+    width: 140px;
+    padding: 7px 12px;
+    font-size: 0.7rem;
+  }
+  .glass-btn {
+    font-size: 0.6rem;
+    letter-spacing: 3px;
+    padding: 8px 20px;
+  }
+  #btn-ingresar.floating-center-btn {
+    bottom: 12px;
+  }
+  .hidden-checkbox:checked ~ #btn-ingresar.floating-center-btn {
+    left: 50%;
+  }
+  .floating-right-btn {
+    right: 20px;
+    bottom: 12px;
+  }
+}
+/* ==========================================================================
+   MEDIA QUERIES - MOBILE LANDSCAPE (CELULAR HORIZONTAL)
+   Rango: hasta 950px de ancho, orientación acostada
+   ========================================================================== */
+@media (max-width: 950px) and (orientation: landscape) {
+  .display-container {
+    height: 100dvh;
+  }
+  /* --- Identidad y Títulos --- */
+  .brand-tagline {
+    top: 10px;
+    font-size: 0.8rem;
+    letter-spacing: 6px;
+  }
+  .brand-center-group {
+    top: 42%;
+    width: 100%;
+  }
+  .brand-link {
+    transform: scale(1); /* Logo mucho más pequeño para que no estorbe */
+  }
+  .luxury-title-img {
+    height: 75vh;
+  }
+  .gold-title-img {
+    bottom: 35px;
+  }
+  /* --- Navegación Inferior --- */
+  .main-nav {
+    bottom: -20px;
+    gap: 15px;
+    padding: 6px 20px;
+  }
+  .main-nav a {
+    font-size: 0.55rem;
+    letter-spacing: 1px;
+  }
+  /* --- Carruseles (Ruedas Laterales) --- */
+  .carousel-column {
+    width: 150px;
+    top: 45%;
+  }
+  .carousel-column:first-of-type {
+    left: -50px;
+    margin-left: 0;
+  }
+  .carousel-column:last-of-type {
+    right: -50px;
+    margin-right: 0;
+  }
+  .carousel-wrapper {
+    width: 260px;
+    height: 260px;
+  }
+  .carousel-3d {
+    --radius: 120px;
+  }
+  .carousel-3d figure {
+    width: 70px;
+    height: 70px;
+    margin-left: -35px;
+    margin-top: -35px;
+  }
+  /* --- Controles UI y Botones --- */
+  .glass-btn {
+    font-size: 0.5rem;
+    padding: 6px 12px;
+  }
+  /* Subimos los botones para que no choquen con la navegación de abajo */
+  #btn-ingresar.floating-center-btn {
+    bottom: 5px;
+  }
+  .floating-right-btn {
+    right: 18px;
+    bottom: 4.5px;
+  }
+  /* Posición del botón Ingresar al abrir el footer */
+  .hidden-checkbox:checked ~ #btn-ingresar.floating-center-btn {
+    left: 42%;
+    /* Sobreescribimos el valor de desktop para que no se salga de la pantalla */
+    transform: translateX(calc(-50% - 100px));
+    bottom: 5px; /* Se ajusta un poco al abrir para alinearse mejor */
+  }
+  /* --- Footer Deslizante --- */
+  .sliding-footer {
+    height: 35px;
+    padding: 0 10px;
+  }
+  .footer-social {
+    left: 15px;
+    gap: 8px;
+  }
+  .footer-social a {
+    width: 20px;
+    height: 20px;
+  }
+  .footer-social a img {
+    width: 16px;
+    height: 16px;
+  }
+  .footer-content {
+    transform: translateX(0);
+    margin-right: -80px;
+  }
+  .login-form {
+    gap: 6px;
+  }
+  .login-form input {
+    width: 110px;
+    padding: 5px 8px;
+    font-size: 0.55rem;
+  }
+}
+/* ==========================================================================
+   MEDIA QUERIES - MOBILE PORTRAIT (CELULAR VERTICAL)
+   Rango: hasta 767px de ancho, orientación vertical
+   ========================================================================== */
+@media (max-width: 767px) and (orientation: portrait) {
+  .display-container {
+    height: 100dvh;
+  }
+  /* --- Identidad y Títulos --- */
+  .brand-tagline {
+    top: 15px;
+    font-size: 0.6rem;
+    letter-spacing: 6px;
+  }
+  .brand-center-group {
+    top: 42%;
+    width: 100%;
+  }
+  .brand-link {
+    transform: scale(0.5); /* Escala pequeña para que encaje en el celular */
+  }
+  .luxury-title-img {
+    height: 150vh;
+  }
+  .gold-title-img {
+    bottom: 80px;
+    height: 15vh;
+  }
+  /* --- Navegación Inferior --- */
+  .main-nav {
+    bottom: 200px; /* Lo subimos para que no tape el botón INGRESAR */
+    gap: 10px;
+    padding: 8px 15px;
+    width: 90%;
+    /* flex-wrap permite que si los enlaces no caben, pasen a la línea de abajo */
+    flex-wrap: wrap;
+    justify-content: center;
+    border-radius: 20px;
+  }
+  .main-nav a {
+    font-size: 0.55rem;
+    letter-spacing: 1.5px;
+  }
+  /* --- Carruseles (Arcos Laterales para Móvil) --- */
+  .carousel-column {
+    width: 100px;
+    top: 42%; /* Alineado con el logo */
+  }
+  .carousel-column:first-of-type {
+    left: -80px; /* Empujamos la rueda hacia la izquierda fuera de la pantalla */
+    margin-left: 0;
+  }
+  .carousel-column:last-of-type {
+    right: -80px; /* Empujamos la rueda hacia la derecha fuera de la pantalla */
+    margin-right: 0;
+  }
+  .carousel-wrapper {
+    width: 260px;
+    height: 260px;
+  }
+  .carousel-3d {
+    --radius: 120px; /* Radio ajustado para móvil */
+  }
+  .carousel-3d figure {
+    width: 70px; /* Relojes más pequeños */
+    height: 70px;
+    margin-left: -35px;
+    margin-top: -35px;
+  }
+  /* --- Controles UI (Botones) --- */
+  .glass-btn {
+    font-size: 0.55rem;
+    letter-spacing: 2px;
+    padding: 8px 16px;
+  }
+  #btn-ingresar.floating-center-btn {
+    bottom: 50px;
+  }
+  /* Posición del botón Ingresar cuando el footer se abre */
+  .hidden-checkbox:checked ~ #btn-ingresar.floating-center-btn {
+    left: 36%;
+    transform: translateX(calc(-50% - 90px)); /* Lo movemos a la izquierda, pero sin salir de pantalla */
+    font-size: 0.5rem;
+    padding: 6px 10px;
+  }
+  .floating-right-btn {
+    right: 5px;
+    bottom: 50px;
+    padding: 6px 12px;
+    font-size: 0.4rem;
+  }
+  /* --- Footer Deslizante --- */
+  .sliding-footer {
+    height: 40px;
+    padding: 0 10px;
+  }
+  .footer-social {
+    left: 10px;
+    gap: 8px;
+  }
+  .footer-social a {
+    width: 22px;
+    height: 22px;
+  }
+  .footer-social a img {
+    width: 18px;
+    height: 18px;
+  }
+  .footer-content {
+    transform: translateX(0); /* Anulamos el desplazamiento original */
+    margin-left: auto; /* Empujamos el formulario a la derecha */
+  }
+  .login-form {
+    gap: 6px;
+  }
+  .login-form input {
+    width: 90px;
+    padding: 5px 8px;
+    font-size: 0.55rem;
+  }
+}
 body.modelos-page {
   background-color: #121212;
   color: #fff;
@@ -1345,6 +2315,7 @@ body.modelos-page {
 
 body.modelos-page #modelosCarousel {
   position: relative;
+  width: 100%;
 }
 @media screen and (max-width: 767px) and (orientation: portrait) {
   body.modelos-page #modelosCarousel {
@@ -1354,8 +2325,8 @@ body.modelos-page #modelosCarousel {
 }
 @media screen and (max-height: 500px) and (orientation: landscape) {
   body.modelos-page #modelosCarousel {
-    height: 60vh;
-    min-height: 200px;
+    height: 58vh;
+    min-height: 240px;
   }
 }
 @media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
@@ -1366,21 +2337,34 @@ body.modelos-page #modelosCarousel {
 }
 @media screen and (min-width: 1024px) and (max-height: 850px) and (orientation: landscape) {
   body.modelos-page #modelosCarousel {
-    height: 50vh;
-    min-height: 350px;
-    margin-bottom: 0;
+    height: 52vh;
+    min-height: 360px;
+    max-height: 500px;
   }
 }
 @media screen and (min-width: 1200px) {
   body.modelos-page #modelosCarousel {
-    height: 75vh;
-    min-height: 500px;
+    height: 58vh;
+    min-height: 420px;
+    max-height: 560px;
   }
 }
 
 body.modelos-page .carousel-inner,
 body.modelos-page .carousel-item {
   height: 100%;
+}
+
+body.modelos-page .carousel-item {
+  position: relative;
+}
+
+body.modelos-page .carousel-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.45) 45%, rgba(0, 0, 0, 0.2) 100%);
+  z-index: 1;
 }
 
 body.modelos-page .carousel-img {
@@ -1390,131 +2374,153 @@ body.modelos-page .carousel-img {
   object-position: center;
 }
 
+body.modelos-page .carousel-caption {
+  z-index: 2;
+}
 @media screen and (max-width: 767px) and (orientation: portrait) {
   body.modelos-page .carousel-caption {
-    bottom: 10%;
-    padding: 0 15px;
-    text-align: center !important;
+    bottom: 12%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 30px);
+    padding: 0 10px;
+    text-align: center;
   }
 }
 @media screen and (max-height: 500px) and (orientation: landscape) {
   body.modelos-page .carousel-caption {
-    bottom: 5%;
-    padding: 0 50px;
+    bottom: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 40px);
+    padding: 0 20px;
+    text-align: center;
   }
 }
 @media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
   body.modelos-page .carousel-caption {
-    bottom: 15%;
+    bottom: 14%;
     padding: 0 40px;
     text-align: left;
   }
 }
 @media screen and (min-width: 1024px) and (max-height: 850px) and (orientation: landscape) {
   body.modelos-page .carousel-caption {
-    bottom: 12%;
-    padding: 0 100px;
-    z-index: 5;
+    bottom: 15%;
+    padding: 0 80px;
   }
 }
 @media screen and (min-width: 1200px) {
   body.modelos-page .carousel-caption {
-    bottom: 25%;
+    bottom: 18%;
     max-width: 800px;
-    margin: 0 auto;
+    padding: 0 20px;
   }
 }
 
-body.modelos-page .carousel-caption h1 {
+body.modelos-page .carousel-caption .h1 {
   font-weight: 900;
+  color: #fff;
   text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9);
 }
 @media screen and (max-width: 767px) and (orientation: portrait) {
-  body.modelos-page .carousel-caption h1 {
-    font-size: 1.8rem;
+  body.modelos-page .carousel-caption .h1 {
+    font-size: 1.7rem;
+    margin-bottom: 8px;
   }
 }
 @media screen and (max-height: 500px) and (orientation: landscape) {
-  body.modelos-page .carousel-caption h1 {
-    font-size: 1.5rem;
-    margin-bottom: 5px;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+  body.modelos-page .carousel-caption .h1 {
+    font-size: 1.4rem;
+    margin-bottom: 6px;
   }
 }
 @media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
-  body.modelos-page .carousel-caption h1 {
-    font-size: 2.8rem;
+  body.modelos-page .carousel-caption .h1 {
+    font-size: 2.4rem;
     margin-bottom: 10px;
-    text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.9);
+  }
+}
+@media screen and (min-width: 1024px) and (max-height: 850px) and (orientation: landscape) {
+  body.modelos-page .carousel-caption .h1 {
+    font-size: 2.8rem;
   }
 }
 @media screen and (min-width: 1200px) {
-  body.modelos-page .carousel-caption h1 {
-    font-size: 4rem;
-    letter-spacing: 2px;
+  body.modelos-page .carousel-caption .h1 {
+    font-size: 3.5rem;
+    letter-spacing: 1px;
   }
 }
 
 body.modelos-page .carousel-caption p {
+  color: #fff;
   text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.9);
 }
 @media screen and (max-width: 767px) and (orientation: portrait) {
   body.modelos-page .carousel-caption p {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
+    margin-bottom: 0;
   }
 }
 @media screen and (max-height: 500px) and (orientation: landscape) {
   body.modelos-page .carousel-caption p {
-    font-size: 0.8rem;
-    margin-bottom: 5px;
-    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+    font-size: 0.85rem;
+    margin-bottom: 0;
   }
 }
 @media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
   body.modelos-page .carousel-caption p {
+    font-size: 1rem;
+  }
+}
+@media screen and (min-width: 1024px) and (max-height: 850px) and (orientation: landscape) {
+  body.modelos-page .carousel-caption p {
+    font-size: 1.05rem;
+  }
+}
+@media screen and (min-width: 1200px) {
+  body.modelos-page .carousel-caption p {
     font-size: 1.1rem;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9);
   }
 }
 
-@media screen and (min-width: 1024px) and (max-height: 850px) and (orientation: landscape) {
-  body.modelos-page main {
-    height: auto;
-    overflow: visible;
-    display: block;
-  }
+body.modelos-page main {
+  display: block;
+  width: 100%;
+  background-color: #121212;
+}
+
+body.modelos-page .catalog-section {
+  position: relative;
+  z-index: 3;
+  background-color: #121212;
 }
 @media screen and (max-width: 767px) and (orientation: portrait) {
   body.modelos-page .catalog-section {
-    padding: 40px 15px;
+    padding: 40px 15px 50px;
   }
 }
 @media screen and (max-height: 500px) and (orientation: landscape) {
   body.modelos-page .catalog-section {
-    padding: 20px 15px;
+    padding: 35px 15px 50px;
   }
 }
 @media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
   body.modelos-page .catalog-section {
-    padding: 50px 30px;
+    padding: 50px 30px 60px;
   }
 }
 @media screen and (min-width: 1024px) and (max-height: 850px) and (orientation: landscape) {
   body.modelos-page .catalog-section {
-    margin-top: 80px;
-    padding-bottom: 80px;
-    padding-left: 50px;
-    padding-right: 50px;
-    background-color: #121212;
-    position: relative;
-    z-index: 10;
+    padding: 60px 40px 70px;
   }
 }
 @media screen and (min-width: 1200px) {
   body.modelos-page .catalog-section {
     max-width: 1400px;
     margin: 0 auto;
-    padding: 100px 20px;
+    padding: 70px 20px 90px;
   }
 }
 
@@ -1522,6 +2528,7 @@ body.modelos-page .catalog-title {
   text-align: center;
   font-weight: 900;
   color: #fff;
+  line-height: 1.2;
 }
 @media screen and (max-width: 767px) and (orientation: portrait) {
   body.modelos-page .catalog-title {
@@ -1533,7 +2540,8 @@ body.modelos-page .catalog-title {
 @media screen and (max-height: 500px) and (orientation: landscape) {
   body.modelos-page .catalog-title {
     font-size: 1.2rem;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
+    letter-spacing: 1px;
   }
 }
 @media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
@@ -1545,13 +2553,14 @@ body.modelos-page .catalog-title {
 @media screen and (min-width: 1024px) and (max-height: 850px) and (orientation: landscape) {
   body.modelos-page .catalog-title {
     font-size: 2.2rem;
-    margin-bottom: 70px;
+    margin-bottom: 55px;
   }
 }
 @media screen and (min-width: 1200px) {
   body.modelos-page .catalog-title {
-    font-size: 3rem;
-    margin-bottom: 80px;
+    font-size: 2.8rem;
+    margin-bottom: 70px;
+    letter-spacing: 2px;
   }
 }
 
@@ -1561,13 +2570,15 @@ body.modelos-page .modelos-category-row {
 @media screen and (max-width: 767px) and (orientation: portrait) {
   body.modelos-page .modelos-category-row {
     flex-direction: column;
+    gap: 18px;
     margin-bottom: 40px;
   }
 }
 @media screen and (max-height: 500px) and (orientation: landscape) {
   body.modelos-page .modelos-category-row {
     flex-direction: column;
-    margin-bottom: 30px;
+    gap: 16px;
+    margin-bottom: 35px;
   }
 }
 @media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
@@ -1581,59 +2592,57 @@ body.modelos-page .modelos-category-row {
 @media screen and (min-width: 1024px) and (max-height: 850px) and (orientation: landscape) {
   body.modelos-page .modelos-category-row {
     flex-direction: row;
-    gap: 40px;
-    margin-bottom: 80px;
+    align-items: stretch;
+    gap: 32px;
+    margin-bottom: 70px;
   }
 }
 @media screen and (min-width: 1200px) {
   body.modelos-page .modelos-category-row {
-    gap: 60px;
-    margin-bottom: 120px;
+    gap: 40px;
+    margin-bottom: 90px;
   }
 }
 
 body.modelos-page .category-label-container {
   background-color: #e60000;
-  border-radius: 4px;
+  border-radius: 8px;
 }
 @media screen and (max-width: 767px) and (orientation: portrait) {
   body.modelos-page .category-label-container {
-    padding: 10px;
-    margin-bottom: 20px;
+    padding: 12px 14px;
     text-align: center;
   }
 }
 @media screen and (max-height: 500px) and (orientation: landscape) {
   body.modelos-page .category-label-container {
-    padding: 8px;
-    margin-bottom: 15px;
+    padding: 10px 12px;
     text-align: center;
   }
 }
 @media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
   body.modelos-page .category-label-container {
-    width: 50px;
-    border-radius: 8px;
+    width: 56px;
+    padding: 20px 0;
+    margin-bottom: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px 0;
-    margin-bottom: 0;
   }
 }
 @media screen and (min-width: 1024px) and (max-height: 850px) and (orientation: landscape) {
   body.modelos-page .category-label-container {
-    width: 60px;
-    border-radius: 10px;
+    width: 64px;
+    padding: 24px 0;
     display: flex;
-    justify-content: center;
     align-items: center;
-    padding: 30px 0;
+    justify-content: center;
+    border-radius: 10px;
   }
 }
 @media screen and (min-width: 1200px) {
   body.modelos-page .category-label-container {
-    width: 80px;
+    width: 76px;
   }
 }
 
@@ -1668,8 +2677,9 @@ body.modelos-page .category-label-container {
 }
 
 body.modelos-page .vertical-label span {
-  font-weight: 800;
+  font-weight: 900;
   color: #fff;
+  text-transform: uppercase;
 }
 @media screen and (max-width: 767px) and (orientation: portrait) {
   body.modelos-page .vertical-label span {
@@ -1679,34 +2689,32 @@ body.modelos-page .vertical-label span {
 }
 @media screen and (max-height: 500px) and (orientation: landscape) {
   body.modelos-page .vertical-label span {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     letter-spacing: 1px;
   }
 }
 @media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
   body.modelos-page .vertical-label span {
-    font-weight: 900;
-    font-size: 1rem;
+    font-size: 0.95rem;
     letter-spacing: 3px;
   }
 }
 @media screen and (min-width: 1024px) and (max-height: 850px) and (orientation: landscape) {
   body.modelos-page .vertical-label span {
-    font-weight: 900;
     font-size: 1rem;
     letter-spacing: 3px;
-    text-transform: uppercase;
   }
 }
 @media screen and (min-width: 1200px) {
   body.modelos-page .vertical-label span {
-    font-size: 1.4rem;
-    letter-spacing: 6px;
+    font-size: 1.2rem;
+    letter-spacing: 5px;
   }
 }
 
 body.modelos-page .category-grid {
   display: grid;
+  width: 100%;
 }
 @media screen and (max-width: 767px) and (orientation: portrait) {
   body.modelos-page .category-grid {
@@ -1717,109 +2725,119 @@ body.modelos-page .category-grid {
 @media screen and (max-height: 500px) and (orientation: landscape) {
   body.modelos-page .category-grid {
     grid-template-columns: 1fr 1fr;
-    gap: 15px;
+    gap: 18px;
   }
 }
 @media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
   body.modelos-page .category-grid {
     flex-grow: 1;
-    grid-template-columns: 1fr 1fr;
-    gap: 25px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
   }
 }
 @media screen and (min-width: 1024px) and (max-height: 850px) and (orientation: landscape) {
   body.modelos-page .category-grid {
     flex-grow: 1;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
+    grid-template-columns: repeat(2, minmax(240px, 1fr));
+    gap: 28px;
   }
 }
 @media screen and (min-width: 1200px) {
   body.modelos-page .category-grid {
-    gap: 40px;
+    grid-template-columns: repeat(2, minmax(300px, 1fr));
+    gap: 32px;
   }
 }
 
 body.modelos-page .moto-card-item {
   background-color: #1a1a1a;
   border: 1px solid #333;
-  border-radius: 8px;
+  border-radius: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
 }
 @media screen and (max-width: 767px) and (orientation: portrait) {
   body.modelos-page .moto-card-item {
-    padding: 25px 15px;
-    text-align: center;
+    padding: 24px 16px;
   }
 }
 @media screen and (max-height: 500px) and (orientation: landscape) {
   body.modelos-page .moto-card-item {
-    padding: 15px;
-    justify-content: space-between;
+    padding: 18px 14px;
   }
 }
 @media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
   body.modelos-page .moto-card-item {
-    padding: 30px 20px;
-    justify-content: space-between;
-    transition: transform 0.3s ease, border-color 0.3s ease;
-  }
-  body.modelos-page .moto-card-item:hover {
-    transform: translateY(-5px);
-    border-color: #e60000;
+    padding: 28px 18px;
+    min-height: 100%;
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   }
 }
 @media screen and (min-width: 1024px) and (max-height: 850px) and (orientation: landscape) {
   body.modelos-page .moto-card-item {
-    padding: 35px 25px;
-    border-radius: 20px;
-    min-height: 420px;
+    padding: 30px 22px;
+    min-height: 390px;
   }
 }
 @media screen and (min-width: 1200px) {
   body.modelos-page .moto-card-item {
-    padding: 50px 40px;
+    padding: 36px 28px;
+    min-height: 430px;
     background: #161616;
     border-color: #252525;
-    border-radius: 25px;
-    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
     cursor: pointer;
-  }
-  body.modelos-page .moto-card-item:hover {
-    transform: translateY(-15px);
-    border-color: #e60000;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(230, 0, 0, 0.1);
   }
 }
 
+@media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+  body.modelos-page .moto-card-item:hover {
+    transform: translateY(-6px);
+    border-color: #e60000;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.6);
+  }
+}
+@media screen and (min-width: 1200px) {
+  body.modelos-page .moto-card-item:hover {
+    transform: translateY(-10px);
+    border-color: #e60000;
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.6), 0 0 18px rgba(230, 0, 0, 0.1);
+  }
+}
 body.modelos-page .moto-title {
-  font-weight: bold;
+  font-weight: 800;
   color: #fff;
+  line-height: 1.2;
 }
 @media screen and (max-width: 767px) and (orientation: portrait) {
   body.modelos-page .moto-title {
-    font-size: 1.3rem;
-    margin-bottom: 15px;
+    font-size: 1.25rem;
+    margin-bottom: 14px;
   }
 }
 @media screen and (max-height: 500px) and (orientation: landscape) {
   body.modelos-page .moto-title {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     margin-bottom: 10px;
-    text-align: center;
   }
 }
 @media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
   body.modelos-page .moto-title {
-    font-size: 1.4rem;
-    margin-bottom: 15px;
+    font-size: 1.35rem;
+    margin-bottom: 14px;
+  }
+}
+@media screen and (min-width: 1024px) and (max-height: 850px) and (orientation: landscape) {
+  body.modelos-page .moto-title {
+    font-size: 1.5rem;
+    margin-bottom: 16px;
   }
 }
 @media screen and (min-width: 1200px) {
   body.modelos-page .moto-title {
-    font-size: 1.8rem;
+    font-size: 1.75rem;
     margin-bottom: 20px;
   }
 }
@@ -1831,16 +2849,16 @@ body.modelos-page .moto-image {
 }
 @media screen and (max-width: 767px) and (orientation: portrait) {
   body.modelos-page .moto-image {
-    max-width: 250px;
-    height: auto;
-    margin-bottom: 15px;
+    max-width: 240px;
+    height: 150px;
+    margin-bottom: 14px;
   }
 }
 @media screen and (max-height: 500px) and (orientation: landscape) {
   body.modelos-page .moto-image {
     max-width: 180px;
-    height: 100px;
-    margin-bottom: 10px;
+    height: 110px;
+    margin-bottom: 12px;
     filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.5));
   }
 }
@@ -1848,100 +2866,101 @@ body.modelos-page .moto-image {
   body.modelos-page .moto-image {
     max-width: 220px;
     height: 130px;
-    margin-bottom: 15px;
+    margin-bottom: 14px;
     filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.6));
   }
 }
 @media screen and (min-width: 1024px) and (max-height: 850px) and (orientation: landscape) {
   body.modelos-page .moto-image {
-    max-width: 260px;
+    max-width: 250px;
     height: 150px;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
   }
 }
 @media screen and (min-width: 1200px) {
   body.modelos-page .moto-image {
-    max-width: 350px;
-    height: 200px;
-    margin-bottom: 30px;
-    transition: transform 0.6s ease;
+    max-width: 320px;
+    height: 190px;
+    margin-bottom: 24px;
+    transition: transform 0.45s ease;
   }
 }
 
 @media screen and (min-width: 1200px) {
   body.modelos-page .moto-card-item:hover .moto-image {
-    transform: scale(1.1);
+    transform: scale(1.06);
   }
 }
 body.modelos-page .moto-brand-logo {
   height: auto;
+  object-fit: contain;
   border-radius: 4px;
 }
 @media screen and (max-width: 767px) and (orientation: portrait) {
   body.modelos-page .moto-brand-logo {
-    width: 40px;
-    margin-bottom: 15px;
+    width: 42px;
+    margin-bottom: 14px;
   }
 }
 @media screen and (max-height: 500px) and (orientation: landscape) {
   body.modelos-page .moto-brand-logo {
-    width: 30px;
-    margin-bottom: 10px;
+    width: 34px;
+    margin-bottom: 12px;
   }
 }
 @media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
   body.modelos-page .moto-brand-logo {
     width: 40px;
-    margin-bottom: 15px;
+    margin-bottom: 14px;
   }
 }
 @media screen and (min-width: 1024px) and (max-height: 850px) and (orientation: landscape) {
   body.modelos-page .moto-brand-logo {
-    width: 45px;
-    height: 45px;
+    width: 44px;
+    height: 44px;
+    margin-bottom: 18px;
+  }
+}
+@media screen and (min-width: 1200px) {
+  body.modelos-page .moto-brand-logo {
+    width: 48px;
+    height: 48px;
     margin-bottom: 20px;
   }
 }
 
 body.modelos-page .moto-description {
   color: #bbb;
-  line-height: 1.5;
+  line-height: 1.6;
+  margin: 0;
 }
 @media screen and (max-width: 767px) and (orientation: portrait) {
   body.modelos-page .moto-description {
-    font-size: 0.85rem;
-    margin: 0;
+    font-size: 0.88rem;
   }
 }
 @media screen and (max-height: 500px) and (orientation: landscape) {
   body.modelos-page .moto-description {
-    font-size: 0.75rem;
-    line-height: 1.4;
-    text-align: center;
+    font-size: 0.78rem;
+    line-height: 1.45;
   }
 }
 @media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
   body.modelos-page .moto-description {
     font-size: 0.9rem;
-    text-align: center;
+  }
+}
+@media screen and (min-width: 1024px) and (max-height: 850px) and (orientation: landscape) {
+  body.modelos-page .moto-description {
+    font-size: 0.95rem;
   }
 }
 @media screen and (min-width: 1200px) {
   body.modelos-page .moto-description {
     font-size: 1rem;
-    max-width: 80%;
-    line-height: 1.8;
+    max-width: 85%;
+    line-height: 1.75;
   }
-}
-.visually-hidden {
-    position: absolute; 
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden; 
-    clip: rect(0, 0, 0, 0); 
-    border: 0;
 }
 
 /*# sourceMappingURL=main.css.map */
