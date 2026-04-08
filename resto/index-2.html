@@ -56,7 +56,7 @@
     <input type="radio" name="categoria" id="cat-servicio" class="category-switch" aria-hidden="true">
     <input type="radio" name="categoria" id="cat-delivery" class="category-switch" aria-hidden="true">
 
-    <img src="../resto/imagen fondo/Gemini_Generated_Image_t1mqy6t1mqy6t1mq.png" alt="Fondo decorativo del restaurante" class="main-bg">
+    <img src="../resto/imagen fondo/Gemini_Generated_Image_t1mqy6t1mqy6t1mq.png" alt="Calle de París de noche frente al restaurante Touche" class="main-bg">
 
     <header id="pantalla-bienvenida" role="banner">
         <label for="toggle-menu" class="welcome-trigger" aria-label="Mostrar menú" role="button" tabindex="0">
@@ -68,19 +68,24 @@
     <section id="pantalla-menu" role="main">
         <h2 class="visually-hidden">Menú Exclusivo</h2>
         
-        <nav class="resto-nav" role="navigation" aria-label="Navegación del menú">
-            <div class="nav-group-left">
+        <div class="nav-group-left">
+            
+            <div class="nav-gif-container">
+                <img src="../resto/gif/picmix.com_1270863.gif" alt="Decoración animada" class="nav-gif">
+            </div>
+
+            <nav class="resto-nav" role="navigation" aria-label="Categorías del menú">
                 <label for="cat-menu" class="nav-item">Menú del Día</label>
                 <label for="cat-postres" class="nav-item">Postres</label>
                 <label for="cat-vinos" class="nav-item">Cava de Vinos</label>
                 <label for="cat-cocteles" class="nav-item">Cócteles</label>
                 <label for="cat-servicio" class="nav-item">Servicio</label>
                 <label for="cat-delivery" class="nav-item">Delivery</label>
-            </div>
-        </nav>
+            </nav>
+        </div>
 
         <div class="menu-container">
-            <img src="../resto/menu/Gemini_Generated_Image_vp4u47vp4u47vp4u__1_-removebg-preview.png" alt="Pizarra elegante del menú" class="menu-board-img">
+            <img src="../resto/menu/Gemini_Generated_Image_vp4u47vp4u47vp4u__1_-removebg-preview.png" alt="Pizarra elegante del menú de Touche" class="menu-board-img">
 
             <h3 id="title-platillos" class="visually-hidden">Platos Principales y Entradas</h3>
             <div id="platillos-grid" class="dishes-grid" role="list" aria-labelledby="title-platillos">
@@ -96,24 +101,11 @@
                 <div class="dish-item" role="listitem"><span>Gratin Dauphinois</span><span>$19</span></div>
             </div>
 
-            <h3 id="title-postres" class="visually-hidden">Nuestros Postres Franceses</h3>
-            <div id="grid-postres" class="dishes-grid" role="list" aria-labelledby="title-postres">
-                <div class="dish-item" role="listitem"><span>Crème Brûlée</span><span>$120</span></div>
-                <div class="dish-item" role="listitem"><span>Tarte Tatin</span><span>$145</span></div>
-                <div class="dish-item" role="listitem"><span>Mousse au Chocolat</span><span>$110</span></div>
-                <div class="dish-item" role="listitem"><span>Profiteroles</span><span>$130</span></div>
             </div>
-
-            <h3 id="title-vinos" class="visually-hidden">Cava de Vinos Exclusivos</h3>
-            <div id="grid-vinos" class="dishes-grid" role="list" aria-labelledby="title-vinos">
-                <div class="dish-item" role="listitem"><span>Chardonnay</span><span>$45</span></div>
-                <div class="dish-item" role="listitem"><span>Cabernet Sauvignon</span><span>$60</span></div>
-            </div>
-        </div>
 
         <footer class="resto-footer">
             <form class="footer-register" action="#" method="POST">
-                <label for="reserva-email" class="gold-label">RESERVA:</label>
+                <label for="reserva-email" class="gold-label">RESERVA / INGRESAR:</label>
                 <input type="email" id="reserva-email" name="email" aria-label="Tu Email para reservas" placeholder="Tu Email..." class="resto-input" required>
                 <button type="submit" class="resto-btn">REGISTRAR</button>
             </form>
@@ -126,6 +118,10 @@
                 <div class="footer-group">
                     <span class="gold-label">HORARIOS:</span>
                     <span class="white-text">12:00 PM - 23:00 PM</span>
+                </div>
+                <div class="footer-group">
+                    <span class="gold-label">DIRECCIÓN:</span>
+                    <span class="white-text">Centro Histórico, Mérida, Yuc.</span>
                 </div>
             </div>
         </footer>
