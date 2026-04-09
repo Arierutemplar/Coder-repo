@@ -1,22 +1,11 @@
-// ==========================================
-// UTILITIES
-// ==========================================
+// Tu main.scss se queda así (está perfecto):
 @use 'utilities/variables';
 @use 'utilities/mixins';
-
-// ==========================================
-// BASE
-// ==========================================
 @use 'base/reset';
 @use 'base/animations';
 
-// ==========================================
-// COMPONENTS
-// ==========================================
-@use 'components/resto';
-@use 'components/bikerace-home';
-@use 'components/relojeria-home';
-// ==========================================
-// PAGES
-// ==========================================
+@use 'components/resto';           // Ya tiene su "protección" .touche-theme
+@use 'components/bikerace-home';   // Ya tiene su "protección" .bikerace-theme
+@use 'components/relojeria-home';  // Ya tiene su "protección" .luxury-theme
+
 @use 'pages/bikerace-modelos';
