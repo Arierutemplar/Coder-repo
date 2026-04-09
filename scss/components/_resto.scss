@@ -38,7 +38,6 @@
         overflow: hidden;
         width: 100vw; 
         height: 100vh;
-        background: #000;
         
         h1 { 
             @extend .visually-hidden; 
@@ -680,7 +679,6 @@
             font-weight: 800;
             border-bottom: 1.5px dotted rgba(139, 45, 45, 0.25);
             padding-bottom: 6px;
-            color: #4a0e0e;
             margin: 0;
         }
 

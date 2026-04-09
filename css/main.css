@@ -179,7 +179,6 @@ body {
   overflow: hidden;
   width: 100vw;
   height: 100vh;
-  background: #000;
 }
 .touche-theme .main-bg {
   position: fixed;
@@ -851,7 +850,6 @@ body {
     font-weight: 800;
     border-bottom: 1.5px dotted rgba(139, 45, 45, 0.25);
     padding-bottom: 6px;
-    color: #4a0e0e;
     margin: 0;
   }
   .touche-theme #pantalla-menu .nav-gif-container {
