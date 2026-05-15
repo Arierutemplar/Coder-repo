@@ -1,0 +1,28 @@
+// Importación de Google Fonts al inicio
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@1,800&display=swap');
+
+// Estilos globales de texto
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: Arial, sans-serif; // Fuente por defecto
+}
+
+h1, h2, h3 {
+    text-transform: uppercase;
+}
+
+.logo-bikerace {
+    font-family: $font-logo; // Kanit
+    font-weight: $font-weight-bold; // 800
+    font-style: $font-style-italic; // Italic
+    text-transform: uppercase;
+    letter-spacing: -1px;
+}
+
+// Clase de utilidad para descripciones
+.text-italic-center {
+    font-style: italic;
+    text-align: center;
+    line-height: 1.6;
+}

@@ -1,0 +1,56 @@
+// 1. TÍTULO DE LA SECCIÓN (Independiente del grid)
+.modelos-page .catalog-section {
+    .section-title, 
+    h2 {
+        width: 100%;           // Ocupa todo el ancho disponible
+        text-align: center;    // Centra el texto internamente
+        display: block;        // Asegura que se comporte como bloque único
+        margin: 40px 0 20px 0; // Margen superior e inferior, 0 a los lados
+        padding: 0;
+        
+        // Reset de posición para evitar herencias del grid
+        position: relative;
+        left: 0;
+        transform: none;
+    }
+
+    // 2. EL GRID DE PRODUCTOS
+    .category-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        padding: 20px;
+        list-style: none;
+
+        // --- MODO LISTA (VERTICAL) ---
+        @media (max-width: 768px) {
+            grid-template-columns: 1fr;
+            margin-left: 0; // Reset para vertical
+            width: 100%;
+
+            .moto-card-item {
+                margin: 0 auto;
+                text-align: center;
+            }
+        }
+
+    // --- MODO GRID (HORIZONTAL) ---
+    @media (max-width: 932px) and (orientation: landscape) {
+        grid-template-columns: repeat(2, 1fr); 
+        margin-left: -30px; // Esto solo mueve el grid, no el título
+        width: calc(100% + 30px); 
+        
+        .moto-card-item article {
+            flex-direction: column;
+        }
+    }
+}
+
+// 2. Aseguramos que el título se mantenga independiente
+.modelos-page .catalog-section h2, 
+.modelos-page .catalog-section .section-title {
+    width: 100%;
+    text-align: center;
+    margin-left: 0; // Evita que herede el -30px del grid
+    padding: 20px 0;
+}}

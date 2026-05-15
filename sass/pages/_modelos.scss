@@ -1,0 +1,111 @@
+.modelos-category-row {
+    display: flex;
+    align-items: stretch;
+    gap: 25px;
+    margin-bottom: 50px;
+
+    .category-label-container {
+        width: 70px;
+        background-color: #e31212;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        
+        // Ajuste para que el texto se lea verticalmente
+        span {
+            writing-mode: vertical-lr;
+            transform: rotate(180deg);
+            color: #ffffff;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-align: center;
+        }
+    }
+}
+
+// Selector que afecta al <ul>
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); // Fuerza las 2 columnas
+    gap: 25px; // Separación ligeramente mayor
+    width: 100%;
+    list-style: none; // Quita los puntos de la lista
+    padding: 0;      // Quita el sangrado por defecto
+    margin: 0;
+}
+
+.moto-card-item {
+    background-color: #0c0c0c;
+    border: 1px solid #1a1a1a;
+    border-radius: 25px; 
+    padding: 40px 20px;  
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    text-align: center;  
+    height: 100%; 
+    
+    // 1. Agregamos la transición base para que el movimiento sea suave
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+
+    // 2. Definimos el efecto hover (al pasar el mouse)
+    &:hover {
+        transform: translateY(-10px); // Levanta la tarjeta ligeramente
+        box-shadow: 0 15px 30px rgba(227, 18, 18, 0.15); // Agrega un brillo sutil con el rojo de tu marca
+        border-color: #e31212; // Cambia el borde sutilmente a rojo
+        
+        // Efecto extra: hace que la moto crezca un poquito
+        .moto-image {
+            transform: scale(1.05);
+        }
+    }
+    .moto-title {
+        font-family: $font-title;
+        font-size: 1.8rem; // Tamaño aumentado
+        color: #ffffff;
+        margin-bottom: 30px;
+        text-transform: uppercase;
+    }
+
+    // Contenedor para apilar moto y logo verticalmente
+    .moto-media-container {
+        display: flex;
+        flex-direction: column; // Apila los elementos
+        align-items: center;
+        width: 100%;
+        margin-bottom: 20px;
+        flex-grow: 1; // Empuja la descripción hacia abajo
+    }
+
+    // Control de tamaño para la moto
+    .moto-image {
+        width: 85%; // Más grande para destacar
+        max-height: 250px;
+        object-fit: contain;
+        margin-bottom: 20px;
+    }
+
+    // Control estricto para el logo estilo "sello" circular
+    .moto-brand-logo {
+        width: 60px;
+        height: 60px;
+        object-fit: contain;
+        background-color: white; 
+        padding: 10px;
+        border-radius: 50%; // Lo convierte en un círculo
+        margin-bottom: 25px;
+    }
+
+ .moto-description {
+        font-size: 1rem;
+        color: #cccccc;
+        font-style: italic; 
+        line-height: 1.6;
+        max-width: 80%; 
+        margin-top: auto; 
+        margin-inline: auto; // Esto centra el bloque de texto horizontalmente
+        text-align: center;  // Asegura que cada línea de texto esté centrada
+    }
+}

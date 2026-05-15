@@ -1,0 +1,85 @@
+.site-footer {
+    background-color: $color-bg;
+    border-top: 1px solid #1a1a1a;
+    padding: 0px 0;
+    width: 100%;
+    flex-shrink: 0; 
+    position: relative;
+    z-index: 10;
+
+    &__container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 40px;
+
+        @media (max-width: 768px) {
+            padding: 0 20px; // Reduce el margen en móvil para ganar espacio
+        }
+    }
+
+    &__social {
+        list-style: none;
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        padding: 0;
+        margin: 0;
+
+        a {
+            color: #ffffff;
+            font-size: 1.2rem;
+            transition: color 0.2s ease, transform 0.2s ease;
+
+            &:hover {
+                color: $color-accent;
+                transform: scale(1.1);
+            }
+        }
+    }
+
+    &__legal {
+        display: flex;
+        flex-direction: column; // Crea las dos filas solicitadas
+        align-items: flex-end;   // Empuja todo hacia la derecha
+        text-align: right;
+        gap: 4px;               // Espacio entre la fila del copyright y los links
+    }
+
+    &__copyright {
+        font-size: 0.7rem; // Un poco más pequeño para que no compita con el contenido
+        color: #666666;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+        margin: 0;
+        padding-left: 30px;
+        
+    }
+
+    &__links {
+        display: flex;
+        align-items: center;
+        gap: 0; // El espacio lo dará el separator
+
+        a {
+            font-size: 0.65rem;
+            color: #666666;
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: color 0.3s;
+
+            &:hover { 
+                color: #ffffff; 
+            }
+        }
+    }
+}
+
+.legal-separator {
+    margin: 0 8px;
+    color: #444444;
+    font-size: 0.6rem;
+}

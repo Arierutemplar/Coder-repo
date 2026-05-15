@@ -1,0 +1,37 @@
+// ==========================================
+// 1. VARIABLES PRIORITARIAS (MARCA)
+// ==========================================
+$color-accent: #e31212;
+$color-accent-h: #b30e0e;
+
+// ==========================================
+// 2. COMPATIBILIDAD RESET Y BASE
+// ==========================================
+$color-bg: #000000;
+$color-text: #ffffff;
+$font-main: 'Arial', sans-serif;
+
+// ==========================================
+// 3. TIPOGRAFÍA BIKERACE
+// ==========================================
+$font-logo: 'Kanit', sans-serif;
+$font-title: 'Orbitron', sans-serif;
+$font-serif: 'Georgia', serif;
+$font-weight-bold: 800;
+$font-style-italic: italic;
+
+// ==========================================
+// 4. ESTRUCTURA Y COMPONENTES
+// ==========================================
+$header-height: 80px;
+$footer-height: 100px;
+$color-surface: #111111;
+$color-bg-card: #0c0c0c;
+$color-border-card: #1a1a1a;
+$color-text-description: #cccccc;
+$border-radius-card: 25px;
+$transition-base: 0.3s ease;
+
+
+// Breakpoints
+$breakpoint-mobile: 768px;

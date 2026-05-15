@@ -1,0 +1,63 @@
+/* Estilos específicos para la Página de Inicio */
+.carousel {
+    height: 100%;
+    width: 100%;
+
+    .carousel-inner, 
+    .carousel-item {
+        height: 100%;
+        width: 100%;
+    }
+
+    .carousel-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        image-rendering: -webkit-optimize-contrast;
+    }
+
+    .carousel-caption {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        max-width: 850px;
+        text-align: center;
+        z-index: 10;
+
+        h1, h2 {
+            font-family: $font-serif; // Usando tu variable de Georgia
+            font-size: 2.4rem;
+            font-style: italic;
+            color: #ffffff;
+            animation: redGlow 2.5s ease-in-out infinite;
+        }
+
+        p {
+            font-family: $font-serif;
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .btn {
+            background-color: $color-accent;
+            padding: 15px 44px;
+            font-weight: 800;
+            border: none; // Asegura que no haya bordes extraños
+            
+            // Eliminamos el contorno azul de enfoque/click
+            &:focus, 
+            &:active,
+            &:focus-visible {
+                outline: 0;
+                box-shadow: none; 
+            }
+
+            &:hover {
+                background-color: $color-accent-h;
+                box-shadow: 0 0 18px rgba(255, 0, 0, 0.5);
+            }
+        }
+    }
+}

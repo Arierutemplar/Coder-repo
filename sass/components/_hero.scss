@@ -1,0 +1,130 @@
+/* Estilos del Hero / Carousel (Página de Inicio) */
+.carousel {
+    height: 100%;
+    width: 100%;
+
+    .carousel-inner, 
+    .carousel-item {
+        height: 100%;
+        width: 100%;
+    }
+
+    .carousel-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        image-rendering: -webkit-optimize-contrast;
+    }
+
+    .carousel-caption {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        max-width: 850px;
+        text-align: center;
+        z-index: 10;
+
+        h1, h2 {
+            font-family: $font-serif; 
+            font-size: 2.4rem;
+            font-style: italic;
+            color: #ffffff;
+            animation: redGlow 2.5s ease-in-out infinite;
+        }
+
+        p {
+            font-family: $font-serif;
+            font-size: 1.05rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            background-color: $color-accent;
+            padding: 15px 44px;
+            font-weight: 800;
+            border: none;
+            transition: all 0.3s ease;
+
+            // Corrección del contorno azul que vimos en la Captura de pantalla (1949).png
+            &:focus, 
+            &:active,
+            &:focus-visible {
+                outline: 0;
+                box-shadow: none; 
+            }
+
+            &:hover {
+                background-color: $color-accent-h;
+                box-shadow: 0 0 18px rgba(255, 0, 0, 0.5);
+                transform: scale(1.05);
+            }
+        }
+    }
+}
+
+.hero {
+    // Reemplaza la variable por el valor directo aquí:
+    @media (max-width: 768px) {
+        padding: 40px 20px;
+        text-align: center;
+
+        h1 {
+            font-size: 1.8rem; 
+            line-height: 1.2;
+        }
+
+        p {
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .btn-explorar {
+            width: 100%; 
+            max-width: 300px;
+        }
+    }
+}
+// --- PEGAR CAROUSEL AL HEADER ---
+@media (max-height: 500px) and (orientation: landscape) {
+    .main-carousel {
+        // Succión hacia arriba para eliminar el hueco negro
+        margin-top: -5px !important; 
+        padding-top: 0;
+        position: relative;
+        z-index: 1;
+    }
+
+    .carousel-item {
+        height: 100vh; 
+        
+        .carousel-caption {
+            bottom: 12%; // Evita que el texto choque con el borde inferior
+            
+            h2 {
+                font-size: 1.4rem;
+                margin-bottom: 2px;
+            }
+            
+            p {
+                font-size: 0.85rem;
+                max-width: 70%;
+                margin: 0 auto 10px;
+            }
+
+            .btn {
+                padding: 4px 12px;
+                font-size: 0.75rem;
+            }
+        }
+    }
+
+    // Ocultamos controles laterales para limpiar la vista
+    .carousel-indicators,
+    .carousel-control-prev,
+    .carousel-control-next {
+        display: none; 
+    }
+}

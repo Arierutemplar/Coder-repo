@@ -1,0 +1,307 @@
+.site-header {
+    background-color: $color-bg;
+    height: $header-height; 
+    border-bottom: 2px solid $color-accent;
+    position: relative;
+    z-index: 1000;
+    width: 100%;
+    backdrop-filter: blur(10px);
+
+    .header-flex {
+        padding: 5px 20px 15px; 
+        display: flex;
+        justify-content: space-between; 
+        align-items: center;
+        height: 100%;
+        max-width: 1400px;
+        margin: 0 auto; // Centrado para desktop
+    }
+
+    // --- VERSIÓN VERTICAL (Portrait) ---
+    @media (max-width: 768px) and (orientation: portrait) {
+        height: auto; 
+        padding: 15px 0; // Un poco más de aire vertical para el centrado
+
+        .header-flex {
+            flex-direction: column; 
+            justify-content: center; // Centrado vertical
+            align-items: center; // Centrado horizontal de los hijos
+            gap: 1.2rem; 
+            width: 100%;
+            padding: 0 25px; 
+            margin: 0; 
+            max-width: 100%;
+        }
+
+        .brand {
+            margin: 0 auto;
+            text-align: center; 
+            width: 100%; 
+        }
+    }
+}
+
+.brand-text {
+    font-family: $font-logo; 
+    font-weight: $font-weight-bold; 
+    font-style: $font-style-italic; 
+    font-size: 3.0rem;
+    text-transform: uppercase;
+    letter-spacing: 3px; 
+    display: block;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    text-align: left; 
+
+    &:hover {
+        color: #fff;
+        text-shadow: 0 0 10px rgba($color-accent, 0.8), 
+                     0 0 20px rgba($color-accent, 0.4);
+        transform: skewX(-10deg); 
+    }
+
+    @media (max-width: 768px) {
+        font-size: 2.2rem; 
+        letter-spacing: 1px;
+        
+        // Aseguramos el centrado de texto en portrait
+        @media (orientation: portrait) {
+            text-align: center;
+        }
+    }
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 2rem; 
+    margin: 0;
+
+    li a {
+        font-family: 'Verdana', sans-serif;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        color: #c1c1c1;
+        text-decoration: none;
+        position: relative;
+
+        &.active {
+            color: $color-accent; 
+            &::after {
+                content: '';
+                position: absolute;
+                bottom: -5px;
+                left: 0;
+                width: 100%;
+                height: 2px;
+                background-color: $color-accent;
+                border-radius: 2px;
+            }
+        }
+
+        &:hover:not(.active) {
+            color: #fff;
+            &::after {
+                content: '';
+                position: absolute;
+                bottom: -5px;
+                left: 25%;
+                width: 50%;
+                height: 2px;
+                background-color: rgba($color-accent, 0.5);
+                transition: all 0.3s ease;
+            }
+        }
+    
+        &.btn-login {
+            border: 2px solid $color-accent;
+            padding: 8px 16px;
+            border-radius: 4px;
+            color: $color-accent;
+        }
+    }
+
+    // VERSIÓN VERTICAL
+    @media (max-width: 768px) {
+        width: auto; 
+        margin: 0; 
+        justify-content: center; 
+        gap: 0.9rem; 
+        padding: 5px 0;
+
+        li a {
+            font-size: 0.7rem; 
+
+            &.btn-login {
+                border-width: 1px;
+                padding: 3px 10px; 
+                font-size: 0.65rem;
+                border-radius: 3px;
+            }
+        }
+    }
+}
+
+// --- HEADER ULTRA-SLIM CONFIGURABLE (SIN IMPORTANT) ---
+@media (max-height: 500px) and (orientation: landscape) {
+    html body {
+        .site-header {
+            min-height: 0; 
+            height: auto;
+            padding: 0;
+            border-bottom: 2px solid #D10000;
+
+            .header-flex {
+                height: 38px; 
+                min-height: 38px;
+                padding: 0 30px; // Espaciado general de los bordes de la pantalla
+                display: flex;
+                align-items: center; 
+                
+                // --- UBICACIÓN GLOBAL ---
+                // space-between: Título Izquierda / Nav Derecha
+                // center: Ambos al centro
+                // flex-start: Ambos a la izquierda
+                justify-content: space-between; 
+            }
+
+            .brand {
+                // --- UBICACIÓN TÍTULO ---
+                // margin-left: 0; (Izquierda) | margin: 0 auto; (Centro) | margin-left: auto; (Derecha)
+                margin: 0; 
+                display: flex;
+                align-items: center;
+
+                .brand-text {
+                    // --- TAMAÑO TÍTULO ---
+                    font-size: 2.2rem; 
+                    letter-spacing: 1px;
+                    line-height: 1;
+                    margin-left: -60px;
+                }
+            }
+
+            .nav-links {
+                // --- UBICACIÓN NAV ---
+                // margin-right: 0; (Derecha) | margin-left: auto; (Empuja a la derecha)
+                margin-left: 140px; 
+                display: flex;
+                align-items: center;
+                
+                // --- TAMAÑO Y ESPACIADO NAV ---
+                gap: 1.5rem; // Espacio entre cada link
+                
+                a {
+                    font-size: 0.75rem; // Tamaño de letra del menú
+                    padding: 0;
+                    text-transform: uppercase;
+                }
+            }
+        }
+    }
+}
+
+
+// --- VERSIÓN TABLET VERTICAL UNIVERSAL (Portrait) ---
+// Se coloca en _header.scss para que afecte a todos los archivos HTML
+@media (min-width: 769px) and (max-width: 1024px) and (orientation: portrait) {
+    html body {
+        .site-header {
+            height: auto;
+            padding: 25px 0; // Un poco más de aire para el formato tablet
+
+            .header-flex {
+                flex-direction: column; 
+                justify-content: center;
+                align-items: center;
+                gap: 1.8rem; // Espacio elegante entre logo y menú
+                max-width: 90%;
+            }
+
+            .brand {
+                margin: 0 auto;
+                
+                .brand-text {
+                    font-size: 3.8rem; // Tamaño imponente para tablets
+                    text-align: center;
+                    letter-spacing: 4px;
+                }
+            }
+
+            .nav-links {
+                margin: 0 auto;
+                justify-content: center;
+                gap: 3rem; // Espacio cómodo para navegación táctil
+                
+                li a {
+                    font-size: 0.9rem; 
+                    
+                    &.btn-login {
+                        padding: 8px 25px;
+                        border-radius: 6px;
+                    }
+                }
+            }
+        }
+
+        // --- AJUSTE OPCIONAL PARA CONTENIDO ---
+        // Esto asegura que el contenido de cualquier página (Refacciones, FAQ) 
+        // no se pegue al header en tablet.
+        .main-content, .refacciones-container, .faq-container {
+            padding-top: 30px;
+        }
+    }
+}
+
+// --- VERSIÓN TABLET HORIZONTAL (Landscape) ---
+@media (min-width: 1025px) and (max-width: 1280px) and (orientation: landscape) {
+    html body {
+        .site-header {
+            height: 70px; // Altura fija cómoda para tablets horizontales
+            padding: 0;
+
+            .header-flex {
+                flex-direction: row; // Volvemos a distribución horizontal
+                justify-content: space-between; 
+                align-items: center;
+                height: 100%;
+                padding: 0 40px; // Espaciado lateral
+                max-width: 100%;
+            }
+
+            .brand {
+                // --- UBICACIÓN TÍTULO ---
+                margin: 0; 
+                
+                .brand-text {
+                    // --- TAMAÑO TÍTULO ---
+                    font-size: 2.5rem; 
+                    text-align: left;
+                    letter-spacing: 2px;
+                }
+            }
+
+            .nav-links {
+                // --- UBICACIÓN NAV ---
+                margin: 0;
+                display: flex;
+                gap: 2rem; // Espacio amplio entre links
+                
+                li a {
+                    font-size: 0.8rem; 
+                    
+                    &.btn-login {
+                        padding: 8px 18px;
+                    }
+                }
+            }
+        }
+
+        // Si tienes el Carousel, nos aseguramos que no tenga huecos
+        .main-carousel {
+            margin-top: 0;
+        }
+    }
+}

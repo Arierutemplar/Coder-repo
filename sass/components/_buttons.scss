@@ -1,0 +1,24 @@
+.btn-signin {
+    font-family: 'Verdana', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #ffffff;
+    border: 2px solid $color-accent; // Usa tu variable roja
+    padding: 9px 22px;
+    border-radius: 3px;
+    background: transparent;
+    transition: background-color 0.25s ease, box-shadow 0.25s ease, color 0.2s ease;
+    white-space: nowrap;
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+
+    &:hover, &:focus, &:active {
+        background-color: $color-accent;
+        box-shadow: 0 0 20px rgba(255, 0, 0, 0.45);
+        color: #ffffff;
+    }
+}

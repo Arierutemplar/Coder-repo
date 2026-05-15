@@ -1,0 +1,6 @@
+@mixin landscape-mobile {
+    // Subimos de 480px a 600px para que detecte celulares modernos
+    @media (max-height: 600px) and (orientation: landscape) {
+        @content;
+    }
+}
