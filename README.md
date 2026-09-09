@@ -1,16 +1,24 @@
-# React + Vite
+# Tumoto Store - E-commerce React JS
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Proyecto final para el curso de React JS en Coderhouse. Una aplicación de comercio electrónico enfocada en repuestos y accesorios de motocicletas.
 
-Currently, two official plugins are available:
+## 🚀 Tecnologías utilizadas
+* **React JS** (con Vite)
+* **React Router DOM** (Navegación SPA)
+* **Firebase / Firestore** (Base de datos y gestión de órdenes)
+* **CSS / Bootstrap** (Estilos y diseño responsivo)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 📦 Características principales
+* **Catálogo de productos:** Filtrado por categorías dinámicas.
+* **Detalle de producto:** Vista individual con control de cantidad (`ItemCount`).
+* **Carrito de compras:** Gestión de estado global con `CartContext` (agregar, eliminar, vaciar y subtotal).
+* **Checkout e integración:** Formulario de compra vinculado a Firestore para la generación de órdenes en tiempo real.
 
-## React Compiler
+## 🛠️ Instalación y ejecución local
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. Clona el repositorio:
+   git clone [https://github.com/Arierutemplar/Coder-repo.git](https://github.com/Arierutemplar/Coder-repo.git)
+2. Instala las dependencias:
+   npm install
+3. Inicia el servidor de desarrollo:
+   npm run dev      
