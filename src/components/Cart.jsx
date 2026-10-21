@@ -11,16 +11,16 @@ import {
   Form,
 } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
-import { useCartContext } from "../context/CartContext";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { db } from "../services/firebase";
+import { useCartContext } from "../context/useCartContext";
+import { submitOrder } from "../services/orders";
 import { Trash2, ArrowLeft, CheckCircle, UserCheck } from "lucide-react";
 
 const Cart = () => {
-  const { cart, removeItem, clear, totalPrice } = useCartContext();
+  const { cart, removeItem, setItemQuantity, clear, totalPrice } = useCartContext();
   const [loading, setLoading] = useState(false);
   const [orderId, setOrderId] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [requestId, setRequestId] = useState(() => crypto.randomUUID());
   const navigate = useNavigate();
 
   // Estado para los datos del comprador
@@ -50,8 +50,15 @@ const Cart = () => {
       return;
     }
 
-    if (buyer.email !== buyer.confirmEmail) {
+    if (
+      buyer.email.trim().toLowerCase() !==
+      buyer.confirmEmail.trim().toLowerCase()
+    ) {
       setFormError("Los correos electrónicos no coinciden.");
+      return;
+    }
+    if (buyer.name.trim().length < 2 || buyer.phone.trim().length < 7) {
+      setFormError("Verifica que tu nombre y teléfono sean válidos.");
       return;
     }
 
@@ -59,40 +66,29 @@ const Cart = () => {
     setLoading(true);
 
     try {
-      const orderRef = collection(db, "orders");
-      const newOrder = await addDoc(orderRef, {
+      const order = await submitOrder({
         buyer: {
-          name: buyer.name,
-          phone: buyer.phone,
-          email: buyer.email,
+          name: buyer.name.trim(),
+          phone: buyer.phone.trim(),
+          email: buyer.email.trim().toLowerCase(),
         },
         items: cart.map((item) => ({
           id: item.id,
-          title: item.title,
-          price: item.price,
           quantity: item.quantity,
         })),
-        total: totalPrice(),
-        date: serverTimestamp(),
+        requestId,
       });
-
-      // Guardar en sessionStorage lo acumulado en esta sesión activa
-      cart.forEach((item) => {
-        const previousPurchases = parseInt(
-          sessionStorage.getItem(`purchased_${item.id}`) || "0",
-          10,
-        );
-        sessionStorage.setItem(
-          `purchased_${item.id}`,
-          (previousPurchases + item.quantity).toString(),
-        );
-      });
-
-      setOrderId(newOrder.id);
+      setOrderId(order.orderId);
       setShowModal(true);
       clear();
+      setRequestId(crypto.randomUUID());
     } catch (error) {
       console.error("Error al procesar la compra:", error);
+      setFormError(
+        error.code === "functions/not-found"
+          ? "El servicio de pedidos aún no está desplegado. Contacta al administrador."
+          : error.message || "No se pudo procesar el pedido. Inténtalo de nuevo.",
+      );
     } finally {
       setLoading(false);
     }
@@ -154,12 +150,11 @@ const Cart = () => {
                     <img
                       src={prod.img}
                       alt={prod.title}
-                      style={{
-                        width: "60px",
-                        height: "50px",
-                        objectFit: "cover",
+                      loading="lazy"
+                      onError={(event) => {
+                        event.currentTarget.src = "/favicon.svg";
                       }}
-                      className="rounded border border-secondary"
+                      className="rounded border border-secondary cart-product-image"
                     />
                     <span className="fw-bold text-light">{prod.title}</span>
                   </td>
@@ -167,7 +162,30 @@ const Cart = () => {
                     ${prod.price?.toLocaleString("es-MX")}
                   </td>
                   <td className="text-center fw-bold text-light">
-                    {prod.quantity}
+                    <div className="d-inline-flex align-items-center gap-2">
+                      <Button
+                        variant="outline-light"
+                        size="sm"
+                        aria-label={`Reducir cantidad de ${prod.title}`}
+                        onClick={() =>
+                          setItemQuantity(prod.id, prod.quantity - 1)
+                        }
+                      >
+                        −
+                      </Button>
+                      <span aria-live="polite">{prod.quantity}</span>
+                      <Button
+                        variant="outline-light"
+                        size="sm"
+                        aria-label={`Aumentar cantidad de ${prod.title}`}
+                        disabled={prod.quantity >= prod.stock}
+                        onClick={() =>
+                          setItemQuantity(prod.id, prod.quantity + 1)
+                        }
+                      >
+                        +
+                      </Button>
+                    </div>
                   </td>
                   <td className="text-center text-warning fw-bold">
                     ${(prod.price * prod.quantity).toLocaleString("es-MX")}
@@ -176,6 +194,7 @@ const Cart = () => {
                     <Button
                       variant="outline-danger"
                       size="sm"
+                      aria-label={`Quitar ${prod.title} del carrito`}
                       onClick={() => removeItem(prod.id)}
                     >
                       <Trash2 size={16} />
@@ -221,7 +240,6 @@ const Cart = () => {
                     placeholder="Ej. Juan Pérez"
                     value={buyer.name}
                     onChange={handleInputChange}
-                    bg="dark"
                     className="bg-dark text-light border-secondary"
                     required
                   />
@@ -273,7 +291,9 @@ const Cart = () => {
                 </Form.Group>
 
                 {formError && (
-                  <p className="text-danger small fw-bold mb-3">{formError}</p>
+                  <p className="text-danger small fw-bold mb-3" role="alert">
+                    {formError}
+                  </p>
                 )}
 
                 <div className="border-top border-secondary pt-3 mt-3">
@@ -288,6 +308,9 @@ const Cart = () => {
                       ${totalPrice().toLocaleString("es-MX")} MXN
                     </span>
                   </div>
+                  <p className="small text-secondary">
+                    Total estimado; el precio y el stock se confirman al procesar el pedido.
+                  </p>
 
                   <Button
                     type="submit"

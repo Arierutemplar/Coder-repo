@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../services/firebase";
@@ -16,33 +16,91 @@ import {
 import { Search, Eye } from "lucide-react";
 
 const ItemListContainer = () => {
-  const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [loading, setLoading] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [sortOrder, setSortOrder] = useState("featured");
+  const [inStockOnly, setInStockOnly] = useState(false);
+  const [catalogState, setCatalogState] = useState({
+    categoryId: undefined,
+    loaded: false,
+    products: [],
+    error: null,
+  });
   const { categoryId } = useParams();
 
   useEffect(() => {
-    setLoading(true);
     const itemsRef = collection(db, "items");
     const q = categoryId
       ? query(itemsRef, where("category", "==", categoryId))
       : itemsRef;
 
+    let active = true;
     getDocs(q)
       .then((snapshot) => {
         const docs = snapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
-        setProducts(docs);
+        if (active) {
+          setCatalogState({ categoryId, products: docs, error: null, loaded: true });
+        }
       })
-      .catch((err) => console.error("Error al obtener productos:", err))
-      .finally(() => setLoading(false));
+      .catch((err) => {
+        console.error("Error al obtener productos:", err);
+        if (active) {
+          setCatalogState({ categoryId, products: [], error: err, loaded: true });
+        }
+      });
+
+    return () => {
+      active = false;
+    };
   }, [categoryId]);
 
-  const filteredProducts = products.filter((prod) =>
-    prod.title?.toLowerCase().includes(searchTerm.toLowerCase().trim()),
+  const loading = !catalogState.loaded || catalogState.categoryId !== categoryId;
+  const error = loading ? null : catalogState.error;
+  const products = useMemo(
+    () => (loading ? [] : catalogState.products),
+    [loading, catalogState.products],
   );
+  const categories = useMemo(
+    () =>
+      [
+        ...new Set(
+          products
+            .map((product) => product.category)
+            .filter((category) => typeof category === "string" && category),
+        ),
+      ].sort(),
+    [products],
+  );
+
+  const filteredProducts = useMemo(() => {
+    const normalizedSearch = searchTerm.trim().toLocaleLowerCase("es-MX");
+    const result = products.filter((product) => {
+      const matchesSearch = [product.title, product.description, product.category]
+        .some(
+          (value) =>
+            typeof value === "string" &&
+            value.toLocaleLowerCase("es-MX").includes(normalizedSearch),
+        );
+
+      return (
+        matchesSearch &&
+        (!selectedCategory || product.category === selectedCategory) &&
+        (!inStockOnly || product.stock > 0)
+      );
+    });
+
+    return result.sort((first, second) => {
+      if (sortOrder === "price-asc") return (first.price ?? 0) - (second.price ?? 0);
+      if (sortOrder === "price-desc") return (second.price ?? 0) - (first.price ?? 0);
+      if (sortOrder === "name") {
+        return (first.title ?? "").localeCompare(second.title ?? "", "es-MX");
+      }
+      return 0;
+    });
+  }, [products, searchTerm, selectedCategory, inStockOnly, sortOrder]);
 
   return (
     <Container className="py-4">
@@ -52,7 +110,7 @@ const ItemListContainer = () => {
         </h2>
 
         {/* Barra de Búsqueda Dinámica */}
-        <div style={{ maxWidth: "320px" }} className="w-100">
+        <div className="w-100 catalog-search">
           <InputGroup>
             <InputGroup.Text className="bg-dark border-secondary text-warning">
               <Search size={18} />
@@ -68,10 +126,66 @@ const ItemListContainer = () => {
         </div>
       </div>
 
+      <Row className="g-2 mb-4">
+        <Col sm={6} lg={3}>
+          <Form.Select
+            aria-label="Filtrar por categoría"
+            value={selectedCategory}
+            onChange={(event) => setSelectedCategory(event.target.value)}
+            className="bg-dark text-light border-secondary"
+          >
+            <option value="">Todas las categorías</option>
+            {categories.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </Form.Select>
+        </Col>
+        <Col sm={6} lg={3}>
+          <Form.Select
+            aria-label="Ordenar productos"
+            value={sortOrder}
+            onChange={(event) => setSortOrder(event.target.value)}
+            className="bg-dark text-light border-secondary"
+          >
+            <option value="featured">Orden recomendado</option>
+            <option value="price-asc">Precio: menor a mayor</option>
+            <option value="price-desc">Precio: mayor a menor</option>
+            <option value="name">Nombre: A-Z</option>
+          </Form.Select>
+        </Col>
+        <Col sm={12} lg={3} className="d-flex align-items-center">
+          <Form.Check
+            type="switch"
+            id="in-stock-filter"
+            label="Solo disponibles"
+            checked={inStockOnly}
+            onChange={(event) => setInStockOnly(event.target.checked)}
+            className="text-light"
+          />
+        </Col>
+        <Col
+          sm={12}
+          lg={3}
+          className="text-lg-end text-secondary align-self-center"
+          aria-live="polite"
+        >
+          {filteredProducts.length} productos
+        </Col>
+      </Row>
+
       {loading ? (
         <div className="text-center py-5">
           <Spinner animation="border" variant="warning" />
           <p className="mt-3 text-light">Cargando catálogo...</p>
+        </div>
+      ) : error ? (
+        <div className="text-center py-5" role="alert">
+          <p className="text-danger fs-5">
+            No se pudieron cargar los productos desde Firestore.
+          </p>
+          <p className="text-secondary">{error.message}</p>
         </div>
       ) : filteredProducts.length === 0 ? (
         <div className="text-center py-5">
@@ -94,7 +208,11 @@ const ItemListContainer = () => {
                   variant="top"
                   src={prod.img}
                   alt={prod.title}
-                  style={{ height: "200px", objectFit: "cover" }}
+                  loading="lazy"
+                  onError={(event) => {
+                    event.currentTarget.src = "/favicon.svg";
+                  }}
+                  className="catalog-product-image"
                 />
                 <Card.Body className="d-flex flex-column justify-content-between">
                   <div>
@@ -111,6 +229,11 @@ const ItemListContainer = () => {
                     <Card.Text className="text-warning fw-bold fs-5 my-2">
                       ${prod.price?.toLocaleString("es-MX")} MXN
                     </Card.Text>
+                    <small className={prod.stock > 0 ? "text-success" : "text-danger"}>
+                      {prod.stock > 0
+                        ? `Disponible · ${prod.stock} en existencia`
+                        : "Agotado"}
+                    </small>
                   </div>
                   <Button
                     as={Link}

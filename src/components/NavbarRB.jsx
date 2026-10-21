@@ -1,7 +1,7 @@
 import { Navbar, Nav, Container, Badge } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { Search, ShoppingCart } from "lucide-react";
-import { useCartContext } from "../context/CartContext";
+import { useCartContext } from "../context/useCartContext";
 
 const NavbarRB = () => {
   const { totalQuantity, totalPrice } = useCartContext();
@@ -33,26 +33,21 @@ const NavbarRB = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             {/* Menú de Navegación Centrado */}
             <Nav
-              className="mx-auto gap-2 text-uppercase fw-semibold"
-              style={{ fontSize: "0.9rem" }}
+              className="mx-auto gap-2 text-uppercase fw-semibold main-navigation"
             >
-              <Nav.Link as={Link} to="/">
+              <Nav.Link as={NavLink} to="/" end>
                 Inicio
               </Nav.Link>
-              <Nav.Link as={Link} to="/tienda">
+              <Nav.Link as={NavLink} to="/tienda">
                 Tienda
               </Nav.Link>
-              <Nav.Link
-                as={Link}
-                to="/motocicletas"
-                className="text-warning fw-bold"
-              >
+              <Nav.Link as={NavLink} to="/motocicletas">
                 Motocicletas
               </Nav.Link>
-              <Nav.Link as={Link} to="/refacciones">
+              <Nav.Link as={NavLink} to="/refacciones">
                 Refacciones
               </Nav.Link>
-              <Nav.Link as={Link} to="/contacto">
+              <Nav.Link as={NavLink} to="/contacto">
                 Contacto
               </Nav.Link>
             </Nav>
@@ -61,13 +56,12 @@ const NavbarRB = () => {
             <div className="d-flex align-items-center gap-3 text-white mt-3 mt-xl-0">
               <Link
                 to="/login"
-                className="text-white text-decoration-none fw-bold"
-                style={{ fontSize: "0.85rem" }}
+                className="text-white text-decoration-none fw-bold account-link"
               >
                 INICIO/REGISTRO
               </Link>
 
-              <Search size={18} style={{ cursor: "pointer" }} />
+              <Search size={18} aria-hidden="true" />
 
               <Link
                 to="/cart"
@@ -84,7 +78,7 @@ const NavbarRB = () => {
                     {totalQuantity()}
                   </Badge>
                 </div>
-                <span className="fw-bold" style={{ fontSize: "0.9rem" }}>
+                <span className="fw-bold cart-total">
                   ${totalPrice().toLocaleString("es-MX")}
                 </span>
               </Link>

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../services/firebase";
-import { useCartContext } from "../context/CartContext";
+import { useCartContext } from "../context/useCartContext";
 import {
   Container,
   Row,
@@ -17,42 +17,57 @@ import {
 import { ArrowLeft, ShoppingCart, CheckCircle2 } from "lucide-react";
 
 const ItemDetailContainer = () => {
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [productState, setProductState] = useState({
+    id: null,
+    product: null,
+    error: null,
+  });
   const [quantity, setQuantity] = useState(1);
-  const [added, setAdded] = useState(false);
-  const [showToast, setShowToast] = useState(false); // Estado para el Toast
+  const [addedProductId, setAddedProductId] = useState(null);
+  const [showToast, setShowToast] = useState(false);
 
   const { id } = useParams();
   const { addItem, cart } = useCartContext();
 
   useEffect(() => {
-    setLoading(true);
+    let active = true;
     const docRef = doc(db, "items", id);
 
     getDoc(docRef)
       .then((snapshot) => {
-        if (snapshot.exists()) {
-          setProduct({ id: snapshot.id, ...snapshot.data() });
-        } else {
-          setProduct(null);
-        }
+        if (!active) return;
+        const product = snapshot.exists()
+          ? { id: snapshot.id, ...snapshot.data() }
+          : null;
+        setProductState({ id, product, error: null });
       })
-      .catch((err) => console.error("Error al cargar producto:", err))
-      .finally(() => setLoading(false));
+      .catch((err) => {
+        console.error("Error al cargar producto:", err);
+        if (active) setProductState({ id, product: null, error: err });
+      });
+
+    return () => {
+      active = false;
+    };
   }, [id]);
 
+  const loading = productState.id !== id;
+  const product = loading ? null : productState.product;
+  const loadError = loading ? null : productState.error;
+  const added = addedProductId === id;
   // Cálculo de stock disponible restando compras anteriores
   const itemInCart = cart.find((item) => item.id === id);
   const quantityInCart = itemInCart ? itemInCart.quantity : 0;
-  const availableStock = product ? product.stock - quantityInCart : 0;
+  const availableStock =
+    product && Number.isSafeInteger(product.stock)
+      ? Math.max(0, product.stock - quantityInCart)
+      : 0;
 
   const handleAdd = () => {
-    if (quantity <= availableStock) {
-      addItem(product, quantity);
-      setAdded(true);
-      setShowToast(true); // Activa la notificación flotante
-    }
+    if (quantity < 1 || quantity > availableStock) return;
+    addItem(product, quantity);
+    setAddedProductId(id);
+    setShowToast(true);
   };
 
   if (loading) {
@@ -67,7 +82,10 @@ const ItemDetailContainer = () => {
   if (!product) {
     return (
       <Container className="py-5 text-center">
-        <h3 className="text-light">El producto no existe.</h3>
+        <h3 className="text-light">
+          {loadError ? "No se pudo cargar el producto." : "El producto no existe."}
+        </h3>
+        {loadError && <p className="text-secondary">{loadError.message}</p>}
         <Button
           as={Link}
           to="/motocicletas"
@@ -97,8 +115,11 @@ const ItemDetailContainer = () => {
             <Card.Img
               src={product.img}
               alt={product.title}
-              className="rounded border border-secondary img-fluid"
-              style={{ maxHeight: "400px", objectFit: "cover", width: "100%" }}
+              loading="lazy"
+              onError={(event) => {
+                event.currentTarget.src = "/favicon.svg";
+              }}
+              className="rounded border border-secondary img-fluid product-detail-image"
             />
           </Col>
           <Col md={6}>
@@ -116,7 +137,7 @@ const ItemDetailContainer = () => {
               <strong className="text-light">{availableStock} unidades</strong>
             </p>
 
-            {availableStock === 0 ? (
+            {availableStock <= 0 ? (
               <div className="p-3 border border-danger text-danger rounded bg-black bg-opacity-50 fw-bold">
                 Agotado temporalmente
               </div>
@@ -145,6 +166,7 @@ const ItemDetailContainer = () => {
                 <div className="d-flex align-items-center border border-secondary rounded bg-black bg-opacity-25">
                   <Button
                     variant="link"
+                    aria-label="Disminuir cantidad"
                     className="text-warning text-decoration-none px-3 fs-4"
                     onClick={() => setQuantity((q) => Math.max(1, q - 1))}
                   >
@@ -153,6 +175,7 @@ const ItemDetailContainer = () => {
                   <span className="fw-bold px-2">{quantity}</span>
                   <Button
                     variant="link"
+                    aria-label="Aumentar cantidad"
                     className="text-warning text-decoration-none px-3 fs-4"
                     onClick={() =>
                       setQuantity((q) => Math.min(availableStock, q + 1))
@@ -167,6 +190,7 @@ const ItemDetailContainer = () => {
                   size="lg"
                   className="fw-bold text-uppercase d-flex align-items-center gap-2"
                   onClick={handleAdd}
+                  disabled={quantity > availableStock}
                 >
                   <ShoppingCart size={20} /> Agregar al Carrito
                 </Button>
@@ -179,8 +203,7 @@ const ItemDetailContainer = () => {
       {/* Contenedor de Toast flotante en esquina inferior derecha */}
       <ToastContainer
         position="bottom-end"
-        className="p-3"
-        style={{ zIndex: 1050 }}
+        className="p-3 product-toast-container"
       >
         <Toast
           bg="dark"
